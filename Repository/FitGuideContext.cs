@@ -46,7 +46,7 @@ namespace Repository
             
         }
         public DbSet<Food> Food { get; set; }
-        public DbSet<Exercise> Exercise { get; set; }
+        public DbSet<Exercise> Exerciseee { get; set; }
         public DbSet<Injury> Injury { get; set; }
         public DbSet<Allergy> Allergy { get; set; }
         public DbSet<WorkOutPlan> WorkOutPlans { get; set; }
