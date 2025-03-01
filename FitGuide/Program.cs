@@ -1,4 +1,6 @@
 
+using FitGuide.MiddleWares;
+
 namespace FitGuide
 {
     public class Program
@@ -22,7 +24,7 @@ namespace FitGuide
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseMiddleware<ProfileTimerMiddleWare>();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
