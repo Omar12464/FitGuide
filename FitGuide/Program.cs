@@ -1,5 +1,9 @@
 
+using Core.Identity;
 using FitGuide.MiddleWares;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Repository;
 
 namespace FitGuide
 {
@@ -15,6 +19,11 @@ namespace FitGuide
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<AppIdentityDbContext>(options=>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+            builder.Services.AddDbContext<FitGuideContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Identity.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,8 @@ namespace Core
         public int NumberOfDays { get; set; }
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
+        public User user { get; set; }
+        public int UserId { get; set; }
 
     }
 }
