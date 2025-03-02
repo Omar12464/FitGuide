@@ -11,8 +11,11 @@ namespace Repository
 {
     public class FitGuideContext:DbContext
     {
+        private readonly DbContextOptions<FitGuideContext> _options;
+
         public FitGuideContext(DbContextOptions<FitGuideContext> options):base(options)
         {
+            _options = options;
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +41,32 @@ namespace Repository
                 entity.Property(e => e.GifBytes).HasColumnType("varbinary(max)");
                 entity.Property(e=>e.GifPath).HasMaxLength(50);
             });
+            modelBuilder.Entity<Allergy>(e =>
+            {
+                e.HasMany(ua => ua.users).WithOne(u => u.allergy);
+            });
+            modelBuilder.Entity<Injury>(e =>
+            {
+                e.HasMany(ua => ua.user).WithOne(u => u.injury);
+            });
+
+            modelBuilder.Entity<WorkOutPlan>(e =>
+            {
+                e.HasOne(u => u.user).WithMany(wo => wo.workOutPlans).HasForeignKey(e => e.UserId);
+            });
+            modelBuilder.Entity<UserMetrics>(e =>
+            {
+                e.HasOne(u=>u.user).WithMany(um=>um.userMetrics).HasForeignKey(e => e.UserId);
+            });
+            modelBuilder.Entity<UserGoal>(e =>
+            {
+                e.HasOne(u=>u.user).WithMany(ug=>ug.userGoals).HasForeignKey(e => e.UserId);
+            });
+            modelBuilder.Entity<NutritionPlan>(e =>
+            {
+                e.HasOne(u => u.user).WithOne();
+            });
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
