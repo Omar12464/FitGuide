@@ -1,0 +1,6 @@
+@FitGuideTest_HostAddress = http://localhost:5133
+
+GET {{FitGuideTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
