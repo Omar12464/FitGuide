@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Core.Identity.Entities
 {
-    public class UserAllergy
+    public class UserInjury
     {
+        public int Id { get; set; }
         public string UserId { get; set; }
-        public int AllergyId { get; set; }
-        public User user { get; set; }
-        public Allergy allergy { get; set; }
+        public List<int> InjuryId { get; set; }= new List<int>();
+
     }
 }
