@@ -6,6 +6,7 @@ namespace FitGuide.HelperMethods
     {
         public Mapping()
         {
+            
         }
     }
 }
