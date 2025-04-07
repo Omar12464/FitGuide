@@ -9,18 +9,22 @@ namespace Core.Identity.Entities
 {
     public class User:IdentityUser
     {
+        public string FistName { get; set; }
+        public string LastName { get; set; }
+        
+        public string FullName =>$"{FistName} {LastName}".Trim();
+        public string Gender { get; set; }
+        public string Country { get; set; }
 
-        public int AllergiesId { get; set; }
-        public int InjuriesId { get; set; }
+        public int Age { get; set; }
+
         public DateTimeOffset CreatedAt { get; set; }= DateTimeOffset.UtcNow;
 
-        //public ICollection<Allergy> allergies { get; set; }
-        //public ICollection<Injury> injuries { get; set; }
-        public ICollection<UserAllergy> userAllergies { get; set; } = new HashSet<UserAllergy>();
-        public ICollection<UserInjury> userInjuries { get; set; } = new HashSet<UserInjury>();
-        public ICollection<WorkOutPlan> workOutPlans { get; set; }=new HashSet<WorkOutPlan>();
-        public ICollection<UserMetrics> userMetrics { get; set; } = new HashSet<UserMetrics>();
-        public ICollection<UserGoal> userGoals { get; set; } = new HashSet<UserGoal>();
+        //public ICollection<UserAllergy> userallergies { get; set; } = new HashSet<UserAllergy>();
+        //public ICollection<UserInjury> userinjuries { get; set; } = new HashSet<UserInjury>();
+        //public ICollection<WorkOutPlan> workoutplans { get; set; } = new HashSet<WorkOutPlan>();
+        //public ICollection<UserMetrics> usermetrics { get; set; } = new HashSet<UserMetrics>();
+        //public ICollection<UserGoal> usergoals { get; set; } = new HashSet<UserGoal>();
 
 
 
