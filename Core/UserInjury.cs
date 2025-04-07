@@ -1,19 +1,17 @@
 ﻿using Core;
-using Core.Identity.Entities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core
+namespace Core.Identity.Entities
 {
-    public class Injury
+    public class UserInjury
     {
-        [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string UserId { get; set; }
+        public List<int> InjuryId { get; set; }= new List<int>();
 
     }
 }

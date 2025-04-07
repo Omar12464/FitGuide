@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Identity.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,13 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class FitGuideContext:DbContext
+    public class FitGuideContext : DbContext
     {
-        public FitGuideContext(DbContextOptions<FitGuideContext> options):base(options)
+        private readonly DbContextOptions<FitGuideContext> _options;
+
+        public FitGuideContext(DbContextOptions<FitGuideContext> options) : base(options)
         {
+            _options = options;
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,22 +38,45 @@ namespace Repository
             modelBuilder.Entity<Exercise>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e=>e.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.GifBytes).HasColumnType("varbinary(max)");
-                entity.Property(e=>e.GifPath).HasMaxLength(50);
+                entity.Property(e => e.GifPath).HasMaxLength(50);
             });
+
+            modelBuilder.Entity<UserAllergy>(entity=>
+            { 
+                entity.HasKey(entity => entity.Id);
+                entity.HasIndex(ua=>new{ua.UserId,ua.AllergyId}).IsUnique();
+
+
+            });
+            modelBuilder.Entity<UserInjury>(entity =>
+            {
+                entity.HasKey(entity => entity.Id);
+                entity.HasIndex(ua => new { ua.UserId, ua.InjuryId }).IsUnique();
+
+            });
+
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
 
-            
+
         }
         public DbSet<Food> Food { get; set; }
-        public DbSet<Exercise> Exerciseee { get; set; }
+        public DbSet<Exercise> Exercise { get; set; }
         public DbSet<Injury> Injury { get; set; }
         public DbSet<Allergy> Allergy { get; set; }
         public DbSet<WorkOutPlan> WorkOutPlans { get; set; }
+        public DbSet<UserGoal> userGoals { get; set; }
+        public DbSet<UserMetrics> userMetrics { get; set; }
+        public DbSet<UserInjury> userInjuries { get; set; }
+        public DbSet<UserAllergy> userAllergies { get; set; }
+        public DbSet<NutritionPlan> nutritionPlans { get; set; }
+
+
 
     }
 }

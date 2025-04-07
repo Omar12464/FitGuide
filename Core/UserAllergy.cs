@@ -6,18 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core
+namespace Core.Identity.Entities
 {
-    public class WorkOutPlan
+    public class UserAllergy
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int NumberOfDays { get; set; }
-        //public DateOnly StartDate { get; set; }
-        //public DateOnly EndDate { get; set; }
         public string UserId { get; set; }
+        public List<int> AllergyId { get; set; } = new List<int>();
 
     }
 }
