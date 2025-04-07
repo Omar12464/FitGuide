@@ -1,5 +1,4 @@
-﻿using Core;
-using Core.Identity.Entities;
+﻿using Core.Identity.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
