@@ -94,29 +94,33 @@ namespace FitGuide
             //})
 
 
+
             var app=builder.Build();
 
-          using  var src = app.Services.CreateScope();
-            var services = src.ServiceProvider;//resolve the serices that you want to use as a depedndency injection
-            var _dbcontext = services.GetRequiredService<AppIdentityDbContext>();
-            var _identitydbccontext = services.GetRequiredService<AppIdentityDbContext>();
-            var _usermanager = services.GetRequiredService<UserManager<User>>();
-            var _logger=services.GetRequiredService<ILoggerFactory>();
-            try
-            {
-                await _dbcontext.Database.MigrateAsync();
-                await _identitydbccontext.Database.MigrateAsync();
-            }
-            catch (Exception ex)
-            {
-                var logger = _logger.CreateLogger<Program>();
-                logger.LogError(ex, "Error Occured During Migration");
 
-            }
 
+            using (var src = app.Services.CreateScope())
+            {
+                var services = src.ServiceProvider;//resolve the serices that you want to use as a depedndency injection
+                var _dbcontext = services.GetRequiredService<AppIdentityDbContext>();
+                var _identitydbccontext = services.GetRequiredService<AppIdentityDbContext>();
+                var _usermanager = services.GetRequiredService<UserManager<User>>();
+                var _logger = services.GetRequiredService<ILoggerFactory>();
+                try
+                {
+                    await _dbcontext.Database.MigrateAsync();
+                    await _identitydbccontext.Database.MigrateAsync();
+                }
+                catch (Exception ex)
+                {
+                    var logger = _logger.CreateLogger<Program>();
+                    logger.LogError(ex, "Error Occured During Migration");
+
+                }
+            }
             app.UseMiddleware<ExceptionMiddleWare>();
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (app.Environment.IsProduction())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
