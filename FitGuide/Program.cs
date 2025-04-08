@@ -120,7 +120,7 @@ namespace FitGuide
             }
             app.UseMiddleware<ExceptionMiddleWare>();
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsProduction())
+            if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
