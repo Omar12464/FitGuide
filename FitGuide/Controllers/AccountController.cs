@@ -6,6 +6,7 @@ using FitGuide.ErrorsManaged;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 
 namespace FitGuide.Controllers
 {
@@ -57,6 +58,35 @@ namespace FitGuide.Controllers
             }
         }
 
+        [HttpPost("LogIn")]
+        public async Task<ActionResult<UserDTO>> LogIn(LogInDTO logIn)
+        {
+            var user = await _userManager.FindByEmailAsync(logIn.EmailAddress);
+            if (user== null)
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Email Doesn't Exist" } });
+            }
+            else
+            {
+                var result =await _signIn.CheckPasswordSignInAsync(user, logIn.Password,false);
+                if (result.Succeeded is false)
+                {
+                    return Unauthorized(new APIResponse(401));
+                }
+                else
+                {
+                    return Ok(new UserDTO()
+                    {
+                        FullName=user.FullName,
+                        Email = logIn.EmailAddress,
+                        Password = logIn.Password,
+                        Token = await _authService.CreateTokenAsync(user,_userManager)
+                    
+                    });
+                }
+            }
+        }
+
         [HttpPost("LogOut")]
         public async Task<ActionResult> Logout()
         {
@@ -64,6 +94,19 @@ namespace FitGuide.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
+        //[HttpPost("LogIn/ForgetPassword")]
+        //public async Task<ActionResult<UserDTO>> ForgetPassword(ResetPasswordDTO resetPassword)
+        //{
+        //    var user =await _userManager.FindByEmailAsync(resetPassword.Password);
+        //    if (user == null)
+        //    {
+        //        return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Email Doesn't Exist" } });
+        //    }
+        //    else
+        //    {
+        //        var result=await _userManager.CheckPasswordAsync()
+        //    }
+        //}
         [HttpGet("emailExist")]
 
         public async Task<ActionResult<bool>> CheckEmailExist(string email) 

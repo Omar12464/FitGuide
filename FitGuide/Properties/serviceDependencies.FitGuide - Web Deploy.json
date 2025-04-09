@@ -31,6 +31,10 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:DatabaseConnection",
       "dynamicId": null
+    },
+    "identityapp1": {
+      "ignored": "true",
+      "type": "identityapp"
     }
   }
 }
