@@ -30,7 +30,7 @@ namespace FitGuide
         {
             var builder = WebApplication.CreateBuilder(args);
             var _configuration = builder.Configuration;
-            
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -38,16 +38,16 @@ namespace FitGuide
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<AppIdentityDbContext>(options=>
+            builder.Services.AddDbContext<AppIdentityDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
 
             builder.Services.AddDbContext<FitGuideContext>(options =>
              options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddIdentity<User,IdentityRole>(options =>
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
             {
-                options.Lockout.DefaultLockoutTimeSpan=TimeSpan.FromMinutes(60);
-                options.Lockout.MaxFailedAccessAttempts=5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
+                options.Lockout.MaxFailedAccessAttempts = 5;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
             builder.Services.AddAuthentication().AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
@@ -66,7 +66,7 @@ namespace FitGuide
             });
             builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
             builder.Services.AddScoped(typeof(IGeneric<>), typeof(GenericRepo<>));
-            builder.Services.AddScoped(typeof(IUserMetricsServices),typeof(UserMetrisService));
+            builder.Services.AddScoped(typeof(IUserMetricsServices), typeof(UserMetrisService));
             builder.Services.AddAutoMapper(typeof(Mapping));
 
 
@@ -98,53 +98,52 @@ namespace FitGuide
             //    options.defaultchallengescheme = jwtbearerdefaults.authenticationscheme;
             //})
 
-
             var app = builder.Build();
-
-            using var src = app.Services.CreateScope();
-            var services = src.ServiceProvider; // Resolve the services that you want to use as dependency injection
-            var _dbcontext = services.GetRequiredService<FitGuideContext>();
-            var _identitydbccontext = services.GetRequiredService<AppIdentityDbContext>();
-            var _usermanager = services.GetRequiredService<UserManager<User>>();
-            var _logger = services.GetRequiredService<ILoggerFactory>();
-
-            try
+            using (var src = app.Services.CreateScope())
             {
-                await FitGuideContextSeed.SeedAsync(_dbcontext);
-                await _dbcontext.Database.MigrateAsync();
-                await _identitydbccontext.Database.MigrateAsync();
+                var services = src.ServiceProvider;//resolve the serices that you want to use as a depedndency injection
+                var _dbcontext = services.GetRequiredService<FitGuideContext>();
+                var _identitydbccontext = services.GetRequiredService<AppIdentityDbContext>();
+                var _usermanager = services.GetRequiredService<UserManager<User>>();
+                var _logger = services.GetRequiredService<ILoggerFactory>();
+                try
+                {
+                    await FitGuideContextSeed.SeedAsync(_dbcontext);
+                    await _dbcontext.Database.MigrateAsync();
+                    await _identitydbccontext.Database.MigrateAsync();
+                }
+                catch (Exception ex)
+                {
+                    var logger = _logger.CreateLogger<Program>();
+                    logger.LogError(ex, "Error Occured During Migration");
+
+                }
+
+                app.UseMiddleware<ExceptionMiddleWare>();
+                // Configure the HTTP request pipeline.
+                if (app.Environment.IsDevelopment())
+                {
+                    app.UseSwagger();
+                    app.UseSwaggerUI();
+                }
+                app.UseMiddleware<ProfileTimerMiddleWare>();
+                app.UseHttpsRedirection();
+
+                app.UseAuthentication();
+                app.UseAuthorization();
+
+                //builder.Services.ConfigureApplicationCookie(options =>
+                //{
+                //    options.Cookie.HttpOnly= true; 
+                //    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+                //    options.SlidingExpiration = true;
+                //    options.LoginPath= "/controller/Login";
+                //});
+
+                app.MapControllers();
+
+                app.Run();
             }
-            catch (Exception ex)
-            {
-                // Log or handle the exception
-                var logger = _logger.CreateLogger("Program");
-                logger.LogError(ex, "An error occurred during migration or seeding.");
-            }
-
-            app.UseMiddleware<ExceptionMiddleWare>();
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-            app.UseMiddleware<ProfileTimerMiddleWare>();
-            app.UseHttpsRedirection();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            //builder.Services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.Cookie.HttpOnly= true; 
-            //    options.ExpireTimeSpan = TimeSpan.FromDays(7);
-            //    options.SlidingExpiration = true;
-            //    options.LoginPath= "/controller/Login";
-            //});
-
-            app.MapControllers();
-
-            app.Run();
         }
     }
 }
