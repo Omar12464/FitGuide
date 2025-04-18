@@ -71,6 +71,8 @@ namespace Repository
         public DbSet<Allergy> Allergy { get; set; }
         public DbSet<WorkOutPlan> WorkOutPlans { get; set; }
         public DbSet<UserGoal> userGoals { get; set; }
+        public DbSet<GoalTempelate> GoalTempelate { get; set; }
+
         public DbSet<UserMetrics> userMetrics { get; set; }
         public DbSet<UserInjury> userInjuries { get; set; }
         public DbSet<UserAllergy> userAllergies { get; set; }

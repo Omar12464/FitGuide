@@ -1,9 +1,12 @@
 
+using AutoMapper;
 using Core.Identity;
 using Core.Identity.Entities;
 using Core.Identity.Interfaces;
 using Core.Interface;
+using Core.Interface.Services;
 using FitGuide.ErrorsManaged;
+using FitGuide.HelperMethods;
 using FitGuide.MiddleWares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -63,6 +66,8 @@ namespace FitGuide
             });
             builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
             builder.Services.AddScoped(typeof(IGeneric<>), typeof(GenericRepo<>));
+            builder.Services.AddScoped(typeof(IUserMetricsServices),typeof(UserMetrisService));
+            builder.Services.AddAutoMapper(typeof(Mapping));
 
 
 
@@ -98,12 +103,13 @@ namespace FitGuide
 
           using  var src = app.Services.CreateScope();
             var services = src.ServiceProvider;//resolve the serices that you want to use as a depedndency injection
-            var _dbcontext = services.GetRequiredService<AppIdentityDbContext>();
+            var _dbcontext = services.GetRequiredService<FitGuideContext>();
             var _identitydbccontext = services.GetRequiredService<AppIdentityDbContext>();
             var _usermanager = services.GetRequiredService<UserManager<User>>();
             var _logger=services.GetRequiredService<ILoggerFactory>();
             try
             {
+                await FitGuideContextSeed.SeedAsync(_dbcontext);
                 await _dbcontext.Database.MigrateAsync();
                 await _identitydbccontext.Database.MigrateAsync();
             }

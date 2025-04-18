@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class Food
+    public class Food: ModelBase
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
         public float Calories { get; set; }

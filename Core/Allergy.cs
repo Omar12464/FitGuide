@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class Allergy
+    public class Allergy:ModelBase
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
