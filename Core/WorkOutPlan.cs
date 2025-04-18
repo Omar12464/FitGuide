@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class WorkOutPlan
+    public class WorkOutPlan : ModelBase
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int NumberOfDays { get; set; }

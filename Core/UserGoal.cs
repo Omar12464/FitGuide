@@ -1,6 +1,7 @@
 ﻿using Core;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -8,16 +9,11 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class UserGoal
+    public class UserGoal : ModelBase
     {
-        [Key]
-        public int Id { get; set; }
         public string UserId { get; set; }
-        public string TypeName { get; set; }
-        public float? BMI { get; set; }
-        public float? weights { get; set; }
-        public float? MuscleMass { get; set; }
-        public float? WaterMass { get; set; }
+        public int GoalTemplateId { get; set; }
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+        public GoalTempelate? GoalTempelate { get; set; }
     }
 }

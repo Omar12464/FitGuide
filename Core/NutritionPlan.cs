@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class NutritionPlan
+    public class NutritionPlan : ModelBase
     {
-        [Key]
-        public int Id { get; set; }
+
         public string UserId { get; set; }
         public string Name { get; set; }
         public float CaloriestTarget { get; set; }

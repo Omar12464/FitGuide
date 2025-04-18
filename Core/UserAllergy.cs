@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Core.Identity.Entities
 {
-    public class UserAllergy
+    public class UserAllergy : ModelBase
     {
-        [Key]
-        public int Id { get; set; }
         public string UserId { get; set; }
         public List<int> AllergyId { get; set; } = new List<int>();
 

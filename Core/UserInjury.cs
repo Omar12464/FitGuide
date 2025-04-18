@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Core.Identity.Entities
 {
-    public class UserInjury
+    public class UserInjury : ModelBase
     {
-        public int Id { get; set; }
         public string UserId { get; set; }
         public List<int> InjuryId { get; set; }= new List<int>();
 

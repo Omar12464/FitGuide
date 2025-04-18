@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Interface
 {
-    public interface IGeneric<T> where T: class
+    public interface IGeneric<T> where T: class 
     {
         public Task<T> GetAsync(T id);
 
@@ -17,6 +18,8 @@ namespace Core.Interface
         public Task AddAsync(T entity);
         public void DeleteAsync(T entity);
         public void UpdateAsync(T entity);
+
+        public Task<T> GetFirstAsync(Expression<Func<T, bool>> filter);
 
 
     }

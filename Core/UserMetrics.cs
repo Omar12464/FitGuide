@@ -9,13 +9,12 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class UserMetrics
+    public class UserMetrics : ModelBase
     {
-        [Key]
-        public int Id { get; set; }
         public string UserId { get; set; }
         public float? BMI { get; set; }
         public float Weight { get; set; }
+        public float Height { get; set; }
         public float? Fat { get; set; }
         public float? MuscleMass { get; set; }
         public float? WaterMass { get; set; }
