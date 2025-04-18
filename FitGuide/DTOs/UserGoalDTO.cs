@@ -2,11 +2,12 @@
 {
     public class UserGoalDTO
     {
-        public string TypeName { get; set; }
-        public float? BMI { get; set; }
-        public float? weights { get; set; }
-        public float? MuscleMass { get; set; }
-        public float? WaterMass { get; set; }
-        public string Description { get; set; }
+        public string? name { get; set; }
+        public float? targetBMI { get; set; }
+        public float? targetWeight { get; set; }
+        public float? targetMuscleMass { get; set; }
+        public float? targetWaterMass { get; set; }
+        public string? description { get; set; }
+        public string? ageGroup { get; set; }
     }
 }

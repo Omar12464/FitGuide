@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using Repository;
 
@@ -132,14 +133,16 @@ namespace FitGuide.Controllers
             }
             if (userMetrics == null) { return BadRequest(new ApiExceptionResponse(400)); }
             var bmi = _userMetrics.CalculateBMI(userMetrics.Weight, userMetrics.Height);
+            var weightcat=_userMetrics.GetWeightCategory(bmi);
             
             var Metrics= _mapper.Map<UserMetricsDTO,UserMetrics>(userMetrics);
             Metrics.UserId=user.Id;
             Metrics.BMI = bmi;
             Metrics.CreatedAt = DateTime.UtcNow;
-            await _repo.AddAsync(Metrics);
+            Metrics.weightCategory = weightcat;
+            bool exist = await _userMetrics.CheckMetrics(Metrics.UserId);
+            if(exist is true) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "This Metrics exist" } }); }
             return Ok(Metrics);
-
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("UpdateMetrics")]
@@ -159,6 +162,9 @@ namespace FitGuide.Controllers
             existedmetrics.WaterMass=userMetrics.WaterMass??existedmetrics?.WaterMass;
             existedmetrics.Fat=userMetrics.Fat??existedmetrics.Fat;
             existedmetrics.BMI = _userMetrics.CalculateBMI(existedmetrics.Weight, existedmetrics.Height);
+            var weightcat= _userMetrics.GetWeightCategory((float)existedmetrics.BMI);
+            existedmetrics.weightCategory = weightcat;
+            
 
             try
             {
@@ -174,7 +180,7 @@ namespace FitGuide.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("SelectGoal")]
 
-        public async Task<ActionResult> AddGoal(string GoalName)
+        public async Task<ActionResult> SelectGoal(string GoalName)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -197,6 +203,33 @@ namespace FitGuide.Controllers
             var mapper = _mapper.Map<UserGoalDTO>(usergoal);
             return Ok(usergoal);
 
+        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("AddGoal")]
+        public async Task<ActionResult> AddGoal(UserGoalDTO userGoal)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
+            }
+            var goals = await _fitGuideContext.GoalTempelate.ToListAsync();
+            var IsGoalAvailable = goals.Any(g =>
+            g.name.Equals(userGoal.name, StringComparison.OrdinalIgnoreCase) &&
+            g.targetWaterMass == userGoal.targetWaterMass &&
+            g.targetMuscleMass == userGoal.targetMuscleMass &&
+            g.targetWeight == userGoal.targetWeight &&
+            g.ageGroup == userGoal.ageGroup);
+            if (IsGoalAvailable)
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "The Goal is duplicated" } });
+            }
+            var mapper = _mapper.Map<UserGoalDTO>(userGoal);
+            return Ok(new
+            {
+                mapper,
+                Message ="Goal added succuessfully but its not saved to your goal"
+            });
         }
 
 

@@ -70,6 +70,11 @@ namespace FitGuide
             builder.Services.AddAutoMapper(typeof(Mapping));
 
 
+            builder.Services.AddControllers()
+             .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                });
 
             builder.Services.Configure<ApiBehaviorOptions>(
                options =>

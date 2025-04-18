@@ -8,6 +8,10 @@ namespace Core.Interface.Services
 {
     public interface IUserMetricsServices
     {
+        public Task<bool> CheckMetrics(string userid);
+
         public float CalculateBMI(float weight, float Height);
+        public WeightCategory GetWeightCategory(float bmi);
+
     }
 }

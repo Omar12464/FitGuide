@@ -13,12 +13,12 @@ namespace FitGuide.HelperMethods
             CreateMap<UpdateUserMetricsDTO, UserMetrics>().ReverseMap()
                 .ForAllMembers(opt => opt.Condition((src, dest, srcmember) => src != null));
             CreateMap<UserGoalDTO, UserGoal>().ReverseMap()
-                .ForMember(dest => dest.BMI, opt => opt.MapFrom(src => src.GoalTempelate.targetBMI))
-                .ForMember(dest => dest.MuscleMass, opt => opt.MapFrom(src => src.GoalTempelate.targetMuscleMass))
-                .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.GoalTempelate.name))
-                .ForMember(dest => dest.WaterMass, opt => opt.MapFrom(src => src.GoalTempelate.targetWaterMass))
-                .ForMember(dest => dest.weights, opt => opt.MapFrom(src => src.GoalTempelate.targetWeight))
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.GoalTempelate.description));
+                .ForMember(dest => dest.targetBMI, opt => opt.MapFrom(src => src.GoalTempelate.targetBMI))
+                .ForMember(dest => dest.targetMuscleMass, opt => opt.MapFrom(src => src.GoalTempelate.targetMuscleMass))
+                .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.GoalTempelate.name))
+                .ForMember(dest => dest.targetWaterMass, opt => opt.MapFrom(src => src.GoalTempelate.targetWaterMass))
+                .ForMember(dest => dest.targetWeight, opt => opt.MapFrom(src => src.GoalTempelate.targetWeight))
+                .ForMember(dest => dest.description, opt => opt.MapFrom(src => src.GoalTempelate.description));
 
 
 

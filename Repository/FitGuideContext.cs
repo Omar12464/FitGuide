@@ -35,6 +35,10 @@ namespace Repository
                 entity.Property(f => f.Fats).HasColumnType("decimal(10,2)");
 
             });
+            modelBuilder.Entity<UserMetrics>(e =>
+            {
+                e.Property(u => u.weightCategory).HasConversion<string>();
+            });
             modelBuilder.Entity<Exercise>(entity =>
             {
                 entity.HasKey(e => e.Id);
