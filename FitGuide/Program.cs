@@ -99,14 +99,15 @@ namespace FitGuide
             //})
 
 
-            var app=builder.Build();
+            var app = builder.Build();
 
-          using  var src = app.Services.CreateScope();
-            var services = src.ServiceProvider;//resolve the serices that you want to use as a depedndency injection
+            using var src = app.Services.CreateScope();
+            var services = src.ServiceProvider; // Resolve the services that you want to use as dependency injection
             var _dbcontext = services.GetRequiredService<FitGuideContext>();
             var _identitydbccontext = services.GetRequiredService<AppIdentityDbContext>();
             var _usermanager = services.GetRequiredService<UserManager<User>>();
-            var _logger=services.GetRequiredService<ILoggerFactory>();
+            var _logger = services.GetRequiredService<ILoggerFactory>();
+
             try
             {
                 await FitGuideContextSeed.SeedAsync(_dbcontext);
@@ -115,9 +116,9 @@ namespace FitGuide
             }
             catch (Exception ex)
             {
-                var logger = _logger.CreateLogger<Program>();
-                logger.LogError(ex, "Error Occured During Migration");
-
+                // Log or handle the exception
+                var logger = _logger.CreateLogger("Program");
+                logger.LogError(ex, "An error occurred during migration or seeding.");
             }
 
             app.UseMiddleware<ExceptionMiddleWare>();
