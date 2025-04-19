@@ -61,9 +61,11 @@ namespace Repository
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
-
-
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=.;Database=FitGuide;Trusted_Connection=True;TrustServerCertificate=True",
+                    b => b.MigrationsAssembly("Repository"));
+            }
         }
         public DbSet<Food> Food { get; set; }
         public DbSet<Exercise> Exercise { get; set; }
@@ -75,6 +77,7 @@ namespace Repository
         public DbSet<UserInjury> userInjuries { get; set; }
         public DbSet<UserAllergy> userAllergies { get; set; }
         public DbSet<NutritionPlan> nutritionPlans { get; set; }
+        public DbSet<User> Users { get; set; }
 
 
 

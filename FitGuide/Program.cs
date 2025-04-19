@@ -1,4 +1,3 @@
-
 using Core.Identity;
 using Core.Identity.Entities;
 using Core.Identity.Interfaces;
@@ -61,7 +60,8 @@ namespace FitGuide
 
                 };
             });
-            builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped(typeof(IGeneric<>), typeof(GenericRepo<>));
 
 
