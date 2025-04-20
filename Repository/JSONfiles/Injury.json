@@ -1,0 +1,163 @@
+[
+  {
+    "Name": "Rotator Cuff Tear",
+    "AffectedBodyPart": "Shoulder",
+    "ContraindicatedExercises": [ "Overhead Press", "Bench Press" ],
+    "SuitableExercises": [ "Shoulder Blade Squeezes", "External Rotations" ],
+    "SuitableEquipment": [ "Dumbbell", "Cable" ]
+  },
+  {
+    "Name": "Shoulder Impingement Syndrome",
+    "AffectedBodyPart": "Shoulder",
+    "ContraindicatedExercises": [ "Overhead Press", "Lateral Raises" ],
+    "SuitableExercises": [ "Wall Slides", "Scapular Retractions" ],
+    "SuitableEquipment": [ "Cable", "Machine" ]
+  },
+  {
+    "Name": "Tennis Elbow (Lateral Epicondylitis)",
+    "AffectedBodyPart": "Elbow",
+    "ContraindicatedExercises": [ "Wrist Curls", "Barbell Rows" ],
+    "SuitableExercises": [ "Eccentric Wrist Extensions", "Forearm Stretches" ],
+    "SuitableEquipment": [ "Dumbbell", "Resistance Band" ]
+  },
+  {
+    "Name": "Golfer's Elbow (Medial Epicondylitis)",
+    "AffectedBodyPart": "Elbow",
+    "ContraindicatedExercises": [ "Reverse Wrist Curls", "Pull-Ups" ],
+    "SuitableExercises": [ "Eccentric Wrist Flexions", "Forearm Pronation/Supination" ],
+    "SuitableEquipment": [ "Dumbbell", "Cable" ]
+  },
+  {
+    "Name": "Wrist Sprain",
+    "AffectedBodyPart": "Wrist",
+    "ContraindicatedExercises": [ "Push-Ups", "Plank" ],
+    "SuitableExercises": [ "Wrist Flexor Stretch", "Wrist Extensor Stretch" ],
+    "SuitableEquipment": [ "None" ]
+  },
+  {
+    "Name": "Carpal Tunnel Syndrome",
+    "AffectedBodyPart": "Wrist",
+    "ContraindicatedExercises": [ "Heavy Grips", "Wrist Rolls" ],
+    "SuitableExercises": [ "Nerve Gliding Exercises", "Wrist Neutral Holds" ],
+    "SuitableEquipment": [ "None" ]
+  },
+  {
+    "Name": "Lower Back Strain",
+    "AffectedBodyPart": "Lower Back",
+    "ContraindicatedExercises": [ "Deadlifts", "Good Mornings" ],
+    "SuitableExercises": [ "Cat-Cow Stretch", "Bird-Dog" ],
+    "SuitableEquipment": [ "None" ]
+  },
+  {
+    "Name": "Herniated Disc",
+    "AffectedBodyPart": "Lower Back",
+    "ContraindicatedExercises": [ "Squats", "Leg Press" ],
+    "SuitableExercises": [ "Pelvic Tilts", "Core Activation Exercises" ],
+    "SuitableEquipment": [ "Machine" ]
+  },
+  {
+    "Name": "Sciatica",
+    "AffectedBodyPart": "Lower Back/Hip",
+    "ContraindicatedExercises": [ "Stiff-Legged Deadlifts", "Seated Forward Bends" ],
+    "SuitableExercises": [ "Piriformis Stretch", "Hamstring Stretch" ],
+    "SuitableEquipment": [ "None" ]
+  },
+  {
+    "Name": "Hip Flexor Strain",
+    "AffectedBodyPart": "Hip",
+    "ContraindicatedExercises": [ "Lunges", "Squats" ],
+    "SuitableExercises": [ "Hip Flexor Stretch", "Glute Bridges" ],
+    "SuitableEquipment": [ "Dumbbell", "Machine" ]
+  },
+  {
+    "Name": "Groin Pull",
+    "AffectedBodyPart": "Groin",
+    "ContraindicatedExercises": [ "Side Lunges", "Adductor Machine" ],
+    "SuitableExercises": [ "Groin Stretch", "Isometric Adductor Holds" ],
+    "SuitableEquipment": [ "Machine" ]
+  },
+  {
+    "Name": "Hamstring Strain",
+    "AffectedBodyPart": "Hamstrings",
+    "ContraindicatedExercises": [ "Deadlifts", "Romanian Deadlifts" ],
+    "SuitableExercises": [ "Hamstring Stretch", "Nordic Hamstring Curls" ],
+    "SuitableEquipment": [ "Dumbbell", "Machine" ]
+  },
+  {
+    "Name": "Quadriceps Strain",
+    "AffectedBodyPart": "Quads",
+    "ContraindicatedExercises": [ "Squats", "Leg Extensions" ],
+    "SuitableExercises": [ "Quad Stretch", "Step-Ups (Low Impact)" ],
+    "SuitableEquipment": [ "Dumbbell", "Machine" ]
+  },
+  {
+    "Name": "Knee Ligament Injury (ACL, MCL, etc.)",
+    "AffectedBodyPart": "Knee",
+    "ContraindicatedExercises": [ "Jump Squats", "Running" ],
+    "SuitableExercises": [ "Straight Leg Raises", "Wall Sit (Partial Range)" ],
+    "SuitableEquipment": [ "Machine" ]
+  },
+  {
+    "Name": "Patellar Tendonitis",
+    "AffectedBodyPart": "Knee",
+    "ContraindicatedExercises": [ "Heavy Squats", "Box Jumps" ],
+    "SuitableExercises": [ "Quad Sets", "Step-Downs" ],
+    "SuitableEquipment": [ "Dumbbell", "Machine" ]
+  },
+  {
+    "Name": "Shin Splints",
+    "AffectedBodyPart": "Shins",
+    "ContraindicatedExercises": [ "Running", "Jump Rope" ],
+    "SuitableExercises": [ "Calf Stretch", "Toe Raises" ],
+    "SuitableEquipment": [ "None" ]
+  },
+  {
+    "Name": "Achilles Tendonitis",
+    "AffectedBodyPart": "Ankle",
+    "ContraindicatedExercises": [ "Heel Drops", "Sprints" ],
+    "SuitableExercises": [ "Calf Stretch", "Eccentric Heel Raises" ],
+    "SuitableEquipment": [ "Dumbbell", "Machine" ]
+  },
+  {
+    "Name": "Ankle Sprain",
+    "AffectedBodyPart": "Ankle",
+    "ContraindicatedExercises": [ "Jumping Exercises", "Lunges" ],
+    "SuitableExercises": [ "Ankle Circles", "Resistance Band Dorsiflexion" ],
+    "SuitableEquipment": [ "Resistance Band" ]
+  },
+  {
+    "Name": "Plantar Fasciitis",
+    "AffectedBodyPart": "Foot",
+    "ContraindicatedExercises": [ "Running", "Jump Rope" ],
+    "SuitableExercises": [ "Towel Scrunches", "Foot Roll" ],
+    "SuitableEquipment": [ "None" ]
+  },
+  {
+    "Name": "Bicep Tendonitis",
+    "AffectedBodyPart": "Elbow",
+    "ContraindicatedExercises": [ "Bicep Curls", "Chin-Ups" ],
+    "SuitableExercises": [ "Bicep Stretch", "Isometric Bicep Holds" ],
+    "SuitableEquipment": [ "Dumbbell", "Cable" ]
+  },
+  {
+    "Name": "Tricep Tendonitis",
+    "AffectedBodyPart": "Elbow",
+    "ContraindicatedExercises": [ "Tricep Dips", "Overhead Tricep Extensions" ],
+    "SuitableExercises": [ "Tricep Stretch", "Isometric Tricep Holds" ],
+    "SuitableEquipment": [ "Dumbbell", "Cable" ]
+  },
+  {
+    "Name": "Pectoral Muscle Strain",
+    "AffectedBodyPart": "Chest",
+    "ContraindicatedExercises": [ "Bench Press", "Push-Ups" ],
+    "SuitableExercises": [ "Chest Stretch", "Isometric Chest Holds" ],
+    "SuitableEquipment": [ "Dumbbell", "Cable" ]
+  },
+  {
+    "Name": "Latissimus Dorsi Strain",
+    "AffectedBodyPart": "Back",
+    "ContraindicatedExercises": [ "Pull-Ups", "Lat Pulldowns" ],
+    "SuitableExercises": [ "Lat Stretch", "Isometric Lat Holds" ],
+    "SuitableEquipment": [ "Cable", "Machine" ]
+  }
+]

@@ -11,12 +11,13 @@ namespace Core
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Difficulty { get; set; }
+        public FitnessLevel Difficulty { get; set; }
         public string TypeOfMachine { get; set; }
         public string TargetMuscle { get; set; }
-        public byte[] GifBytes { get; set; }
-        public string GifPath { get; set; }
-
+        public List<string> TargetInjury { get; set; }
+        //public byte[] GifBytes { get; set; }
+        //public string GifPath { get; set; }
+        public ICollection<WorkOutExercises> workOutExercises { get; set; } = new HashSet<WorkOutExercises>();
 
     }
 }

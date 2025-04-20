@@ -13,9 +13,9 @@ namespace Core
         public string Name { get; set; }
         public string Description { get; set; }
         public int NumberOfDays { get; set; }
+        public FitnessLevel DifficultyLevel { get; set; }
         //public DateOnly StartDate { get; set; }
         //public DateOnly EndDate { get; set; }
-        public string UserId { get; set; }
-
+        public ICollection<WorkOutExercises> workOutExercises { get; set; } = new HashSet<WorkOutExercises>();
     }
 }

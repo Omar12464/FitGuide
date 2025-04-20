@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core;
+using Core.Identity.Entities;
 using FitGuide.DTOs;
 
 namespace FitGuide.HelperMethods
@@ -19,6 +20,7 @@ namespace FitGuide.HelperMethods
                 .ForMember(dest => dest.targetWaterMass, opt => opt.MapFrom(src => src.GoalTempelate.targetWaterMass))
                 .ForMember(dest => dest.targetWeight, opt => opt.MapFrom(src => src.GoalTempelate.targetWeight))
                 .ForMember(dest => dest.description, opt => opt.MapFrom(src => src.GoalTempelate.description));
+            CreateMap<InjuryUserDTO, UserInjury>().ReverseMap();
 
 
 

@@ -32,6 +32,19 @@ namespace Repository
 
                 }
             }
+            var injurydata = File.ReadAllText("../Repository/JSONfiles/Injury.json");
+            var injuries = JsonSerializer.Deserialize<List<Injury>>(injurydata, options);
+            if(injurydata.Count() > 0)
+            {
+                if(fitGuideContext.Injury.Count()== 0)
+                {
+                    foreach(var injury in injuries)
+                    {
+                        fitGuideContext.Set<Injury>().Add(injury);
+                    }
+                    await fitGuideContext.SaveChangesAsync();
+                }
+            }
         }
     }
 }

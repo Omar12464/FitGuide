@@ -38,6 +38,7 @@ namespace Repository
             modelBuilder.Entity<UserMetrics>(e =>
             {
                 e.Property(u => u.weightCategory).HasConversion<string>();
+                e.Property(u=>u.fitnessLevel).HasConversion<string>();
             });
             modelBuilder.Entity<Exercise>(entity =>
             {
@@ -56,10 +57,16 @@ namespace Repository
             });
             modelBuilder.Entity<UserInjury>(entity =>
             {
-                entity.HasKey(entity => entity.Id);
-                entity.HasIndex(ua => new { ua.UserId, ua.InjuryId }).IsUnique();
+                entity.HasKey(entity =>entity.Id);
+                entity.HasIndex(ua => new { ua.UserId, ua.injuryId }).IsUnique();
+                entity.HasOne(ua => ua.injury).WithMany(ua => ua.UserInjuries).HasForeignKey(ua => ua.injuryId);
 
             });
+            modelBuilder.Entity<WorkOutPlan>(entity=>
+            {
+                entity.Property(u => u.DifficultyLevel).HasConversion<string>();
+
+            })
 
 
         }

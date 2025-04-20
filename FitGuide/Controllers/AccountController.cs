@@ -29,8 +29,11 @@ namespace FitGuide.Controllers
         private readonly IGeneric<UserMetrics> _repo;
         private readonly IGeneric<UserGoal> _repoGoal;
         private readonly IGeneric<GoalTempelate> _repoGoalTemplate;
+        private readonly IGeneric<Injury> _repoInjury;
+        private readonly IGeneric<UserInjury> _repoUserInjury;
 
-        public AccountController(FitGuideContext fitGuideContext,UserManager<User> userManager,SignInManager<User> signIn,IAuthService authService,IMapper mapper,IUserMetricsServices userMetrics,IGeneric<UserMetrics> Repo,IGeneric<UserGoal> RepoGoal,IGeneric<GoalTempelate>RepoGoalTemplate)
+        public AccountController(FitGuideContext fitGuideContext,UserManager<User> userManager,SignInManager<User> signIn,IAuthService authService,IMapper mapper,IUserMetricsServices userMetrics,IGeneric<UserMetrics> Repo,IGeneric<UserGoal> RepoGoal,IGeneric<GoalTempelate>RepoGoalTemplate,IGeneric<Injury> RepoInjury
+            ,IGeneric<UserInjury> RepoUserInjury)
         {
             _fitGuideContext = fitGuideContext;
             _userManager = userManager;
@@ -41,6 +44,8 @@ namespace FitGuide.Controllers
             _repo = Repo;
             _repoGoal = RepoGoal;
             _repoGoalTemplate = RepoGoalTemplate;
+            _repoInjury = RepoInjury;
+            _repoUserInjury = RepoUserInjury;
         }
 
         [HttpPost("Register")]
@@ -199,14 +204,19 @@ namespace FitGuide.Controllers
                 GoalTemplateId = goaltemplate.Id,
                 CreatedAt = DateTime.UtcNow,
             };
-            await _repoGoal.AddAsync(usergoal);
-            var mapper = _mapper.Map<UserGoalDTO>(usergoal);
+            if (goaltemplate.Id == usergoal.GoalTemplateId) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "GoalName is already in your list" } }); }
+            else
+            {
+                await _repoGoal.AddAsync(usergoal);
+                var mapper = _mapper.Map<UserGoalDTO>(usergoal);
+            }
+
             return Ok(usergoal);
 
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("AddGoal")]
-        public async Task<ActionResult> AddGoal(UserGoalDTO userGoal)
+        [HttpPost("UpdateGoal")]
+        public async Task<ActionResult> UpdateGoal(UserGoalDTO userGoal)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -215,7 +225,7 @@ namespace FitGuide.Controllers
             }
             var goals = await _fitGuideContext.GoalTempelate.ToListAsync();
             var IsGoalAvailable = goals.Any(g =>
-            g.name.Equals(userGoal.name, StringComparison.OrdinalIgnoreCase) &&
+            g.name.Equals(userGoal.name, StringComparison.OrdinalIgnoreCase) ||
             g.targetWaterMass == userGoal.targetWaterMass &&
             g.targetMuscleMass == userGoal.targetMuscleMass &&
             g.targetWeight == userGoal.targetWeight &&
@@ -224,7 +234,8 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "The Goal is duplicated" } });
             }
-            var mapper = _mapper.Map<UserGoalDTO>(userGoal);
+            var mapper = _mapper.Map<UserGoalDTO,UserGoal>(userGoal);
+            await _repoGoal.AddAsync(mapper);
             return Ok(new
             {
                 mapper,
@@ -232,6 +243,67 @@ namespace FitGuide.Controllers
             });
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("RemoveGoal")]
+        public async Task<ActionResult> RemoveGoal( string goalname)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
+            }
+            var usergoal=await _repoGoal.GetFirstAsync(ug=>ug.UserId == user.Id);
+            if (usergoal == null)
+            {
+                return BadRequest(new ApiValidationErrorResponse() {Errors= new string[] {"Goal Not Related To You"} });
+            }
+            _repoGoal.DeleteAsync(usergoal);
+
+            return Ok(new
+            {
+                Message = $"Your Goal {goalname} has been deleted"
+            });
+        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("AddInjury")]
+        public async Task<ActionResult<InjuryUserDTO>> AddInjury( UserInjuryDTO userInjury)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
+            }
+            var injuries=await _repoInjury.GetAllAsync();
+            var addedinjury = new List<string>();
+            if (userInjury == null ) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Injury is not supported or available" } }); }
+                var exisitinginjury = injuries.FirstOrDefault(i => i.Id.Equals(userInjury.Id));
+                if(exisitinginjury != null)
+                {
+                    var userInjuryExist = await _fitGuideContext.userInjuries.AnyAsync(ui => ui.UserId == user.Id && ui.injuryId .Equals( exisitinginjury.Id));
+                    if (!userInjuryExist)
+                    {
+                        var newuser = new UserInjury
+                        {
+                            UserId = user.Id,
+                            injuryId = exisitinginjury.Id
+                        };
+                        await _repoUserInjury.AddAsync(newuser);
+                        addedinjury.Add(newuser.injury.Name);
+                        //var mapper = _mapper.Map<InjuryUserDTO>(exisitinginjury);
+                        //mapper.UserId = user.Id;
+                        //var injuryuser = _mapper.Map<UserInjury>(mapper);
+                        
+                    }
+
+                }
+            return Ok(addedinjury);
+
+        }
+       
+
+
+
+        
 
     }
 }

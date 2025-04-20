@@ -10,7 +10,8 @@ namespace Core.Identity.Entities
     public class UserInjury : ModelBase
     {
         public string UserId { get; set; }
-        public List<int> InjuryId { get; set; }= new List<int>();
+        public int injuryId { get; set; } 
+        public Injury injury { get; set; }
 
     }
 }

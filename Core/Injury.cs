@@ -12,6 +12,12 @@ namespace Core
     public class Injury : ModelBase
     {
         public string Name { get; set; }
+        public string AffectedBodyPart { get; set; }
+        public List<string> ContraindicatedExercises { get; set; }
+        public List<string> SuitableExercises { get; set; }
+        public List<string> SuitableEquipment { get; set; }
+        public ICollection<UserInjury> UserInjuries { get; set; }
+
 
     }
 }
