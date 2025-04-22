@@ -7,7 +7,6 @@
         public float? targetWeight { get; set; }
         public float? targetMuscleMass { get; set; }
         public float? targetWaterMass { get; set; }
-        public string? description { get; set; }
-        public string? ageGroup { get; set; }
+        public string description { get; set; }
     }
 }

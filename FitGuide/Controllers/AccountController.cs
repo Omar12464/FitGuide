@@ -147,6 +147,7 @@ namespace FitGuide.Controllers
             Metrics.weightCategory = weightcat;
             bool exist = await _userMetrics.CheckMetrics(Metrics.UserId);
             if(exist is true) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "This Metrics exist" } }); }
+            await _repo.AddAsync(Metrics);
             return Ok(Metrics);
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -184,7 +185,6 @@ namespace FitGuide.Controllers
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("SelectGoal")]
-
         public async Task<ActionResult> SelectGoal(string GoalName)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -192,55 +192,112 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
-            if (GoalName == null) { return BadRequest(new ApiExceptionResponse(400)); }
-            var goaltemplate = await _repoGoalTemplate.GetFirstAsync(g => GoalName == g.name);
-            if (goaltemplate == null)
+
+            var userMetrics = await _repo.GetFirstAsync(u => u.UserId.Equals(user.Id));
+            if (userMetrics == null)
+            {
+                return NotFound(new ApiExceptionResponse(404, "User metrics not found."));
+            }
+
+            if (string.IsNullOrEmpty(GoalName))
+            {
+                return BadRequest(new ApiExceptionResponse(400, "Goal name is required."));
+            }
+
+            var goalTemplate = await _repoGoalTemplate.GetFirstAsync(g => g.name == GoalName);
+            if (goalTemplate == null)
             {
                 return NotFound(new ApiExceptionResponse(404, "Goal template not found."));
             }
-            var usergoal = new UserGoal()
+
+            
+            // Validate that required fields are populated
+            if (!goalTemplate.targetWeight.HasValue || !goalTemplate.targetMuscleMass.HasValue || !goalTemplate.targetWaterMass.HasValue)
             {
-                UserId = user.Id,
-                GoalTemplateId = goaltemplate.Id,
-                CreatedAt = DateTime.UtcNow,
-            };
-            if (goaltemplate.Id == usergoal.GoalTemplateId) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "GoalName is already in your list" } }); }
-            else
-            {
-                await _repoGoal.AddAsync(usergoal);
-                var mapper = _mapper.Map<UserGoalDTO>(usergoal);
+                return BadRequest(new ApiExceptionResponse(400, "Goal template is missing required attributes."));
             }
 
-            return Ok(usergoal);
+            // Create the user goal
+            var userGoal = new UserGoal
+            {
+                UserId = user.Id,
+                CreatedAt = DateTime.UtcNow
+            };
 
+            // Calculate BMI
+            var bmi = _userMetrics.CalculateBMI(
+                goalTemplate.targetWeight.Value,
+                userMetrics.Height
+            );
+            var description = new string($"GoalMadebased on {user.FistName} input");
+            userGoal.targetBMI = bmi;
+            userGoal.description = description;
+            userGoal.name = goalTemplate.name;
+            userGoal.targetMuscleMass = userMetrics.MuscleMass -goalTemplate.targetMuscleMass;
+            userGoal.targetWaterMass = userMetrics.WaterMass - goalTemplate.targetWaterMass;
+            userGoal.targetWeight = userMetrics.Weight-goalTemplate.targetWeight.Value;
+            await _repoGoal.AddAsync(userGoal);
+
+            // Return the response
+            return Ok(new UserGoalDTO
+            {
+                name = userGoal.name,
+                targetWeight = userGoal.targetWeight.Value,
+                targetMuscleMass = userGoal.targetMuscleMass.Value,
+                targetWaterMass = userGoal.targetWaterMass.Value,
+                targetBMI = bmi,
+                description = description
+            });
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("UpdateGoal")]
-        public async Task<ActionResult> UpdateGoal(UserGoalDTO userGoal)
+        public async Task<ActionResult> UpdateGoal(UpdateUserGoalDTO userGoal)
         {
             var user = await _userManager.GetUserAsync(User);
+            var usermetrics = await _repo.GetFirstAsync(u => u.UserId.Equals(user.Id));
+            var userHeight=usermetrics.Height;
+
             if (user == null)
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
-            var goals = await _fitGuideContext.GoalTempelate.ToListAsync();
-            var IsGoalAvailable = goals.Any(g =>
-            g.name.Equals(userGoal.name, StringComparison.OrdinalIgnoreCase) ||
-            g.targetWaterMass == userGoal.targetWaterMass &&
-            g.targetMuscleMass == userGoal.targetMuscleMass &&
-            g.targetWeight == userGoal.targetWeight &&
-            g.ageGroup == userGoal.ageGroup);
-            if (IsGoalAvailable)
+            //var goals = await _repoGoalTemplate.GetFirstAsync(u=>u.name.Equals(userGoal.name));
+            var IsGoalAvailable = await _repoGoal.GetFirstAsync(u => u.UserId.Equals(user.Id));
+
+            if (!(IsGoalAvailable==null))
             {
-                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "The Goal is duplicated" } });
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "The Goal isnot found" } });
             }
-            var mapper = _mapper.Map<UserGoalDTO,UserGoal>(userGoal);
-            await _repoGoal.AddAsync(mapper);
-            return Ok(new
+            var bmi =  _userMetrics.CalculateBMI(userGoal.TargetWeight, userHeight);
+            userGoal.TargetBMI = bmi;
+            if (userGoal.TargetMuscleMass.HasValue)
             {
-                mapper,
-                Message ="Goal added succuessfully but its not saved to your goal"
+                IsGoalAvailable.targetMuscleMass = userGoal.TargetMuscleMass;
+            }
+            if (userGoal.TargetWeight!=0)
+            {
+                IsGoalAvailable.targetWeight = userGoal.TargetWeight;
+            }
+            if (userGoal.TargetBMI.HasValue)
+            {
+                IsGoalAvailable.targetBMI = userGoal.TargetBMI;
+            }
+
+            return Ok(new UserGoalDTO
+            {
+                targetBMI=IsGoalAvailable.targetBMI,
+                targetWeight=IsGoalAvailable.targetWeight,
+                targetMuscleMass=IsGoalAvailable.targetMuscleMass,
+                name=IsGoalAvailable.name,
+                description=IsGoalAvailable.description
             });
+            //var mapper = _mapper.Map<UserGoalDTO,UserGoal>(userGoal);
+            //await _repoGoal.AddAsync(mapper);
+            //return Ok(new
+            //{
+            //    mapper,
+            //    Message ="Goal added succuessfully but its not saved to your goal"
+            //});
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -285,7 +342,7 @@ namespace FitGuide.Controllers
                         var newuser = new UserInjury
                         {
                             UserId = user.Id,
-                            injuryId = exisitinginjury.Id
+                            injuryId = userInjury.Id
                         };
                         await _repoUserInjury.AddAsync(newuser);
                         addedinjury.Add(newuser.injury.Name);
@@ -297,6 +354,7 @@ namespace FitGuide.Controllers
 
                 }
             return Ok(addedinjury);
+
 
         }
        

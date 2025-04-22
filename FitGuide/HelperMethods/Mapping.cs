@@ -10,18 +10,36 @@ namespace FitGuide.HelperMethods
         public Mapping()
         {
             CreateMap<UserMetrics, UserMetricsDTO>().ReverseMap()
-                .ForMember(um=>um.BMI,opt=>opt.Ignore()).ForMember(um => um.CreatedAt, opt => opt.Ignore());
+                .ForMember(um=>um.BMI,opt=>opt.Ignore()).ForMember(um => um.CreatedAt, opt => opt.Ignore())
+                .ForMember(um=>um.fitnessLevel,opt=>opt.MapFrom(um=>um.fitnessLevel.ToString()));
+
             CreateMap<UpdateUserMetricsDTO, UserMetrics>().ReverseMap()
                 .ForAllMembers(opt => opt.Condition((src, dest, srcmember) => src != null));
-            CreateMap<UserGoalDTO, UserGoal>().ReverseMap()
-                .ForMember(dest => dest.targetBMI, opt => opt.MapFrom(src => src.GoalTempelate.targetBMI))
-                .ForMember(dest => dest.targetMuscleMass, opt => opt.MapFrom(src => src.GoalTempelate.targetMuscleMass))
-                .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.GoalTempelate.name))
-                .ForMember(dest => dest.targetWaterMass, opt => opt.MapFrom(src => src.GoalTempelate.targetWaterMass))
-                .ForMember(dest => dest.targetWeight, opt => opt.MapFrom(src => src.GoalTempelate.targetWeight))
-                .ForMember(dest => dest.description, opt => opt.MapFrom(src => src.GoalTempelate.description));
+            //createmap<usergoaldto, usergoal>().reversemap()
+            //    .formember(dest => dest.targetbmi, opt => opt.mapfrom(src => src.goaltempelate.targetbmi))
+            //    .formember(dest => dest.targetmusclemass, opt => opt.mapfrom(src => src.goaltempelate.targetmusclemass))
+            //    .formember(dest => dest.name, opt => opt.mapfrom(src => src.goaltempelate.name))
+            //    .formember(dest => dest.targetwatermass, opt => opt.mapfrom(src => src.goaltempelate.targetwatermass))
+            //    .formember(dest => dest.targetweight, opt => opt.mapfrom(src => src.goaltempelate.targetweight));
             CreateMap<InjuryUserDTO, UserInjury>().ReverseMap();
+            CreateMap<WorkOutExercises, WorkOutExercisesResponseDTO>()
+                           .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                           .ForMember(dest => dest.ExerciseId, opt => opt.MapFrom(src => src.ExerciseId))
+                           .ForMember(dest => dest.WorkoOutId, opt => opt.MapFrom(src => src.WorkoOutId))
+                           .ForMember(dest => dest.WorkOutName, opt => opt.MapFrom(src => src.workOutPlan.Name))
+                           .ForMember(dest => dest.NumberOfReps, opt => opt.MapFrom(src => src.NumberOfReps))
+                           .ForMember(dest => dest.NumberOfSets, opt => opt.MapFrom(src => src.NumberOfSets))
+                           .ForMember(dest => dest.Exercise, opt => opt.MapFrom(src => src.exercise))
+                           .ForMember(dest => dest.WorkOutPlan, opt => opt.MapFrom(src => src.workOutPlan));
+                                
 
+            // Map Exercise to ExerciseDto
+            CreateMap<Exercise, ExerciseDto>()
+                .ForMember(dest => dest.Difficulty, opt => opt.MapFrom(src => src.Difficulty.ToString()));
+
+            // Map WorkOutPlan to WorkOutPlanDto
+            CreateMap<WorkOutPlan, WorkOutPlanDto>()
+                .ForMember(dest => dest.DifficultyLevel, opt => opt.MapFrom(src => src.DifficultyLevel.ToString()));
 
 
         }

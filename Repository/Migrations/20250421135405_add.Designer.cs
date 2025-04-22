@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(FitGuideContext))]
-    partial class FitGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20250421135405_add")]
+    partial class add
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,9 +54,8 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Difficulty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -64,12 +66,10 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TargetMuscle")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TypeOfMachine")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -276,29 +276,19 @@ namespace Repository.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int?>("GoalTempelateId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GoalTemplateId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("targetBMI")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("targetMuscleMass")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("targetWaterMass")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("targetWeight")
-                        .HasColumnType("real");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("GoalTempelateId");
 
                     b.ToTable("userGoals");
                 });
@@ -366,14 +356,6 @@ namespace Repository.Migrations
                     b.Property<int>("NumberOfSets")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkOutName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("WorkoOutId")
                         .HasColumnType("int");
 
@@ -423,6 +405,15 @@ namespace Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("injury");
+                });
+
+            modelBuilder.Entity("Core.UserGoal", b =>
+                {
+                    b.HasOne("Core.GoalTempelate", "GoalTempelate")
+                        .WithMany()
+                        .HasForeignKey("GoalTempelateId");
+
+                    b.Navigation("GoalTempelate");
                 });
 
             modelBuilder.Entity("Core.WorkOutExercises", b =>

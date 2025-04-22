@@ -1,0 +1,50 @@
+[
+  {
+    "Name": "Push Pull Legs",
+    "Description": "A classic split routine focusing on Push, Pull, and Legs over 3 days.",
+    "NumberOfDays": 3,
+    "DifficultyLevel": "InterMediate"
+  },
+  {
+    "Name": "Upper Lower Split",
+    "Description": "A balanced upper and lower body split routine over 2 days.",
+    "NumberOfDays": 2,
+    "DifficultyLevel": "Beginner"
+  },
+  {
+    "Name": "Full Body Workout",
+    "Description": "A full-body workout designed for beginners to build overall strength.",
+    "NumberOfDays": 1,
+    "DifficultyLevel": "Beginner"
+  },
+  {
+    "Name": "Strength Training Plan",
+    "Description": "A plan focused on building maximum strength with compound lifts.",
+    "NumberOfDays": 4,
+    "DifficultyLevel": "Professional"
+  },
+  {
+    "Name": "Endurance Training Plan",
+    "Description": "A plan designed to improve muscular and cardiovascular endurance.",
+    "NumberOfDays": 5,
+    "DifficultyLevel": "InterMediate"
+  },
+  {
+    "Name": "Hypertrophy Training Plan",
+    "Description": "A plan optimized for muscle growth with moderate weights and higher reps.",
+    "NumberOfDays": 4,
+    "DifficultyLevel": "InterMediate"
+  },
+  {
+    "Name": "Rehabilitation Plan",
+    "Description": "A low-impact plan designed for recovery and injury prevention.",
+    "NumberOfDays": 3,
+    "DifficultyLevel": "Beginner"
+  },
+  {
+    "Name": "CrossFit-Inspired Plan",
+    "Description": "A high-intensity plan combining strength, endurance, and functional movements.",
+    "NumberOfDays": 6,
+    "DifficultyLevel": "Professional"
+  }
+]

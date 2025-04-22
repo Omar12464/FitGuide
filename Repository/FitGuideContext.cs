@@ -1,11 +1,14 @@
 ﻿using Core;
 using Core.Identity.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Repository
@@ -38,37 +41,83 @@ namespace Repository
             modelBuilder.Entity<UserMetrics>(e =>
             {
                 e.Property(u => u.weightCategory).HasConversion<string>();
-                e.Property(u=>u.fitnessLevel).HasConversion<string>();
+                e.Property(u => u.fitnessLevel).HasConversion<string>();
             });
             modelBuilder.Entity<Exercise>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.GifBytes).HasColumnType("varbinary(max)");
-                entity.Property(e => e.GifPath).HasMaxLength(50);
-            });
+                entity.Property(e=>e.Difficulty).HasConversion<string>();
+                entity.Property(e => e.TypeOfMachine).IsRequired(false).HasMaxLength(1000);
+                entity.Property(e => e.TargetMuscle).IsRequired(false).HasMaxLength(1000);
+                entity.HasMany(w => w.workOutExercises).WithOne(w => w.exercise).HasForeignKey(w => w.ExerciseId);
+                //entity.Property(e => e.GifBytes).HasColumnType("varbinary(max)");
+                //entity.Property(e => e.GifPath).HasMaxLength(50);
 
-            modelBuilder.Entity<UserAllergy>(entity=>
-            { 
+                entity.Property(e => e.TargetInjury).HasConversion(
+                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                 v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null) ?? new List<string>()
+                 ).IsRequired(false).Metadata.SetValueComparer(new ValueComparer<List<string>>(
+                 (c1, c2) => c1.SequenceEqual(c2),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                 c => c.ToList()
+                 ));
+          
+
+                modelBuilder.Entity<UserAllergy>(entity =>
+            {
                 entity.HasKey(entity => entity.Id);
-                entity.HasIndex(ua=>new{ua.UserId,ua.AllergyId}).IsUnique();
+                entity.HasIndex(ua => new { ua.UserId, ua.AllergyId }).IsUnique();
 
 
             });
-            modelBuilder.Entity<UserInjury>(entity =>
-            {
-                entity.HasKey(entity =>entity.Id);
-                entity.HasIndex(ua => new { ua.UserId, ua.injuryId }).IsUnique();
-                entity.HasOne(ua => ua.injury).WithMany(ua => ua.UserInjuries).HasForeignKey(ua => ua.injuryId);
+                modelBuilder.Entity<UserInjury>(entity =>
+                {
+                    entity.HasKey(entity => entity.Id);
+                    entity.HasIndex(ua => new { ua.UserId, ua.injuryId }).IsUnique();
+                    entity.HasOne(ua => ua.injury).WithMany(ua => ua.UserInjuries).HasForeignKey(ua => ua.injuryId);
 
+                });
+                modelBuilder.Entity<WorkOutPlan>(entity =>
+                {
+                    entity.Property(u => u.DifficultyLevel).HasConversion<string>();
+                    entity.HasMany(w => w.workOutExercises).WithOne(w => w.workOutPlan).HasForeignKey(w => w.WorkoOutId);
+                });
+                modelBuilder.Entity<Injury>(entity =>
+                {
+                    entity.Property(e => e.SuitableExercises).HasConversion(
+                        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                        v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null) ?? new List<string>()
+                       ).IsRequired(false).Metadata.SetValueComparer(new ValueComparer<List<string>>(
+                           (c1, c2) => c1.SequenceEqual(c2),
+                           c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                           c => c.ToList()
+                       ));
+
+                    entity.Property(e => e.SuitableEquipment).HasConversion(
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null) ?? new List<string>()
+                    ).IsRequired(false).Metadata.SetValueComparer(new ValueComparer<List<string>>(
+                    (c1, c2) => c1.SequenceEqual(c2),
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => c.ToList()
+                    ));
+
+                    entity.Property(e => e.ContraindicatedExercises).HasConversion(
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null) ?? new List<string>()
+                    ).IsRequired(false).Metadata.SetValueComparer(new ValueComparer<List<string>>(
+                    (c1, c2) => c1.SequenceEqual(c2),
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => c.ToList()
+                    ));
+
+                });
             });
-            modelBuilder.Entity<WorkOutPlan>(entity=>
+            modelBuilder.Entity<WorkOutExercises>(entity =>
             {
-                entity.Property(u => u.DifficultyLevel).HasConversion<string>();
-
-            })
-
-
+                entity.HasKey(e => e.Id);
+            });
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -88,6 +137,9 @@ namespace Repository
         public DbSet<UserInjury> userInjuries { get; set; }
         public DbSet<UserAllergy> userAllergies { get; set; }
         public DbSet<NutritionPlan> nutritionPlans { get; set; }
+        public DbSet<WorkOutExercises> workOutExercises { get; set; }
+
+
 
 
 

@@ -23,12 +23,12 @@ namespace Core
     }
     public enum FitnessLevel
     {
-        [EnumMember(Value = "Beginner")]
-        Beginner=1,
-        [EnumMember(Value = "InterMediate")]
-        InterMediate=2,
-        [EnumMember(Value = "Professional")]
-        Professional=3
+        [System.Runtime.Serialization.EnumMember(Value = "Beginner")]
+        Beginner,
+        [System.Runtime.Serialization.EnumMember(Value = "InterMediate")]
+        InterMediate,
+        [System.Runtime.Serialization.EnumMember(Value = "Professional")]
+        Professional
     }
     public class UserMetrics : ModelBase
     {

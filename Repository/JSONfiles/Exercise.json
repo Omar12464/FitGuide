@@ -1,0 +1,274 @@
+[
+  {
+    "Name": "Seated Cable Row",
+    "Description": "A machine-based exercise targeting the back muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Cable",
+    "TargetMuscle": "Back",
+    "TargetInjury": [ "None" ]
+  },
+  {
+    "Name": "Lat Pulldown",
+    "Description": "A machine-based exercise targeting the lats and upper back.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Machine",
+    "TargetMuscle": "Back",
+    "TargetInjury": [ "Shoulder Impingement Syndrome" ]
+  },
+  {
+    "Name": "Leg Press",
+    "Description": "A machine-based exercise targeting the quads, hamstrings, and glutes.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Machine",
+    "TargetMuscle": "Legs",
+    "TargetInjury": [ "Knee Ligament Injury ACL, MCL, etc.", "Patellar Tendonitis" ]
+  },
+  {
+    "Name": "Chest Fly Machine",
+    "Description": "A machine-based exercise targeting the chest muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Machine",
+    "TargetMuscle": "Chest",
+    "TargetInjury": [ "Pectoral Muscle Strain" ]
+  },
+  {
+    "Name": "Shoulder Blade Squeezes",
+    "Description": "A rehabilitation exercise to strengthen the shoulder blades and improve posture.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Resistance Band",
+    "TargetMuscle": "Shoulders",
+    "TargetInjury": [ "Rotator Cuff Tear" ]
+  },
+  {
+    "Name": "External Rotations",
+    "Description": "A rotator cuff rehabilitation exercise using a resistance band or dumbbell.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Shoulders",
+    "TargetInjury": [ "Rotator Cuff Tear" ]
+  },
+  {
+    "Name": "Wall Slides",
+    "Description": "A shoulder impingement rehabilitation exercise to improve mobility and reduce pain.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Resistance Band",
+    "TargetMuscle": "Shoulders",
+    "TargetInjury": [ "Shoulder Impingement Syndrome" ]
+  },
+  {
+    "Name": "Scapular Retractions",
+    "Description": "An exercise to strengthen the scapular muscles and improve shoulder stability.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Cable",
+    "TargetMuscle": "Shoulders",
+    "TargetInjury": [ "Shoulder Impingement Syndrome" ]
+  },
+  {
+    "Name": "Eccentric Wrist Extensions",
+    "Description": "A rehabilitation exercise for tennis elbow using a dumbbell.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Forearms",
+    "TargetInjury": [ "Tennis Elbow Lateral Epicondylitis" ]
+  },
+  {
+    "Name": "Forearm Stretches",
+    "Description": "A stretching exercise to relieve tension in the forearm muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Forearms",
+    "TargetInjury": [ "Tennis Elbow (Lateral Epicondylitis)" ]
+  },
+  {
+    "Name": "Eccentric Wrist Flexions",
+    "Description": "A rehabilitation exercise for golfer's elbow using a dumbbell.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Forearms",
+    "TargetInjury": [ "Golfer's Elbow (Medial Epicondylitis)" ]
+  },
+  {
+    "Name": "Forearm Pronation/Supination",
+    "Description": "An exercise to improve forearm rotation and strength using a dumbbell.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Forearms",
+    "TargetInjury": [ "Golfer's Elbow (Medial Epicondylitis)" ]
+  },
+  {
+    "Name": "Hip Flexor Stretch",
+    "Description": "A stretching exercise to relieve tension in the hip flexor muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Hip Flexors",
+    "TargetInjury": [ "Hip Flexor Strain" ]
+  },
+  {
+    "Name": "Glute Bridges",
+    "Description": "A strengthening exercise for the glutes and hamstrings.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Glutes",
+    "TargetInjury": [ "Hip Flexor Strain" ]
+  },
+  {
+    "Name": "Groin Stretch",
+    "Description": "A stretching exercise to relieve tension in the groin muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Groin",
+    "TargetInjury": [ "Groin Pull" ]
+  },
+  {
+    "Name": "Isometric Adductor Holds",
+    "Description": "A static exercise to strengthen the adductor muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Machine",
+    "TargetMuscle": "Groin",
+    "TargetInjury": [ "Groin Pull" ]
+  },
+  {
+    "Name": "Hamstring Stretch",
+    "Description": "A stretching exercise to relieve tension in the hamstring muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Hamstrings",
+    "TargetInjury": [ "Hamstring Strain" ]
+  },
+  {
+    "Name": "Nordic Hamstring Curls",
+    "Description": "A strengthening exercise for the hamstrings.",
+    "Difficulty": "InterMediate",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Hamstrings",
+    "TargetInjury": [ "Hamstring Strain" ]
+  },
+  {
+    "Name": "Quad Stretch",
+    "Description": "A stretching exercise to relieve tension in the quadriceps muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Quads",
+    "TargetInjury": [ "Quadriceps Strain" ]
+  },
+  {
+    "Name": "Step-Ups (Low Impact)",
+    "Description": "A low-impact exercise to strengthen the quadriceps.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Quads",
+    "TargetInjury": [ "Quadriceps Strain" ]
+  },
+  {
+    "Name": "Straight Leg Raises",
+    "Description": "A rehabilitation exercise to strengthen the quadriceps without bending the knee.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Quads",
+    "TargetInjury": [ "Knee Ligament Injury (ACL, MCL, etc.)" ]
+  },
+  {
+    "Name": "Wall Sit (Partial Range)",
+    "Description": "A partial-range wall sit to strengthen the quadriceps while minimizing knee strain.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Quads",
+    "TargetInjury": [ "Knee Ligament Injury (ACL, MCL, etc.)" ]
+  },
+  {
+    "Name": "Pelvic Tilts",
+    "Description": "A gentle exercise to mobilize the lower back and pelvis.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Lower Back",
+    "TargetInjury": [ "Herniated Disc" ]
+  },
+  {
+    "Name": "Core Activation Exercises",
+    "Description": "A series of exercises to engage and strengthen the core muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Core",
+    "TargetInjury": [ "Herniated Disc" ]
+  },
+  {
+    "Name": "Piriformis Stretch",
+    "Description": "A stretch to relieve tension in the piriformis muscle and alleviate sciatic pain.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Glutes",
+    "TargetInjury": [ "Sciatica" ]
+  },
+  {
+    "Name": "Ankle Circles",
+    "Description": "A rehabilitation exercise to improve ankle mobility.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Ankles",
+    "TargetInjury": [ "Ankle Sprain" ]
+  },
+  {
+    "Name": "Resistance Band Dorsiflexion",
+    "Description": "A rehabilitation exercise for ankle injuries using a resistance band.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Resistance Band",
+    "TargetMuscle": "Ankles",
+    "TargetInjury": [ "Ankle Sprain" ]
+  },
+  {
+    "Name": "Bicep Stretch",
+    "Description": "A stretching exercise to relieve tension in the bicep muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Cable",
+    "TargetMuscle": "Biceps",
+    "TargetInjury": [ "Bicep Tendonitis" ]
+  },
+  {
+    "Name": "Isometric Bicep Holds",
+    "Description": "A static exercise to strengthen the biceps without movement.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Biceps",
+    "TargetInjury": [ "Bicep Tendonitis" ]
+  },
+  {
+    "Name": "Tricep Stretch",
+    "Description": "A stretching exercise to relieve tension in the tricep muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Cable",
+    "TargetMuscle": "Triceps",
+    "TargetInjury": [ "Tricep Tendonitis" ]
+  },
+  {
+    "Name": "Isometric Tricep Holds",
+    "Description": "A static exercise to strengthen the triceps without movement.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Triceps",
+    "TargetInjury": [ "Tricep Tendonitis" ]
+  },
+  {
+    "Name": "Chest Stretch",
+    "Description": "A stretching exercise to relieve tension in the chest muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Cable",
+    "TargetMuscle": "Chest",
+    "TargetInjury": [ "Pectoral Muscle Strain" ]
+  },
+  {
+    "Name": "Isometric Chest Holds",
+    "Description": "A static exercise to strengthen the chest muscles without movement.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Dumbbell",
+    "TargetMuscle": "Chest",
+    "TargetInjury": [ "Pectoral Muscle Strain" ]
+  },
+  {
+    "Name": "Lat Stretch",
+    "Description": "A stretching exercise to relieve tension in the latissimus dorsi muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Cable",
+    "TargetMuscle": "Back",
+    "TargetInjury": [ "Latissimus Dorsi Strain" ]
+  }
+]

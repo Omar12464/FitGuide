@@ -67,6 +67,7 @@ namespace FitGuide
             builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
             builder.Services.AddScoped(typeof(IGeneric<>), typeof(GenericRepo<>));
             builder.Services.AddScoped(typeof(IUserMetricsServices), typeof(UserMetrisService));
+            builder.Services.AddScoped(typeof(IGenrateWorkOutService), typeof(GenerateWorkOutPlansService));
             builder.Services.AddAutoMapper(typeof(Mapping));
 
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(FitGuideContext))]
-    partial class FitGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20250421195248_add4")]
+    partial class add4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,29 +279,19 @@ namespace Repository.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int?>("GoalTempelateId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GoalTemplateId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("targetBMI")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("targetMuscleMass")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("targetWaterMass")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("targetWeight")
-                        .HasColumnType("real");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("GoalTempelateId");
 
                     b.ToTable("userGoals");
                 });
@@ -423,6 +416,15 @@ namespace Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("injury");
+                });
+
+            modelBuilder.Entity("Core.UserGoal", b =>
+                {
+                    b.HasOne("Core.GoalTempelate", "GoalTempelate")
+                        .WithMany()
+                        .HasForeignKey("GoalTempelateId");
+
+                    b.Navigation("GoalTempelate");
                 });
 
             modelBuilder.Entity("Core.WorkOutExercises", b =>
