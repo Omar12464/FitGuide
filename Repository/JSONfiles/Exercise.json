@@ -111,164 +111,196 @@
     "TargetMuscle": "Glutes",
     "TargetInjury": [ "Hip Flexor Strain" ]
   },
-  {
-    "Name": "Groin Stretch",
-    "Description": "A stretching exercise to relieve tension in the groin muscles.",
-    "Difficulty": "Beginner",
-    "TypeOfMachine": "Bodyweight",
-    "TargetMuscle": "Groin",
-    "TargetInjury": [ "Groin Pull" ]
-  },
-  {
-    "Name": "Isometric Adductor Holds",
-    "Description": "A static exercise to strengthen the adductor muscles.",
-    "Difficulty": "Beginner",
-    "TypeOfMachine": "Machine",
-    "TargetMuscle": "Groin",
-    "TargetInjury": [ "Groin Pull" ]
-  },
-  {
+    {
+      "Name": "Side Lying Leg Lift",
+      "Description": "A strengthening exercise to target the hip abductors and improve groin stability.",
+      "Difficulty": "Beginner",
+      "TypeOfMachine": "Bodyweight",
+      "TargetMuscle": "Groin",
+      "TargetInjury": [ "Groin Pull" ]
+    },
+    {
+      "Name": "Standing Groin Stretch",
+      "Description": "A stretching exercise to relieve tension in the groin muscles while standing.",
+      "Difficulty": "Beginner",
+      "TypeOfMachine": "Bodyweight",
+      "TargetMuscle": "Groin",
+      "TargetInjury": [ "Groin Pull" ]
+    },
+    {
+      "Name": "Seated Groin Stretch",
+      "Description": "A seated stretching exercise to relieve tension in the groin muscles.",
+      "Difficulty": "Beginner",
+      "TypeOfMachine": "Bodyweight",
+      "TargetMuscle": "Groin",
+      "TargetInjury": [ "Groin Pull" ]
+    },
+    {
+      "Name": "Lateral Band Walk",
+      "Description": "A resistance band exercise to strengthen the hip abductors and prevent groin injuries.",
+      "Difficulty": "Intermediate",
+      "TypeOfMachine": "Resistance Band",
+      "TargetMuscle": "Groin",
+      "TargetInjury": [ "Groin Pull" ]
+    },
+    {
+      "Name": "Sumo Squat",
+      "Description": "A squat variation targeting the groin and inner thighs, improving strength and flexibility.",
+      "Difficulty": "Intermediate",
+      "TypeOfMachine": "Bodyweight",
+      "TargetMuscle": "Groin",
+      "TargetInjury": [ "Groin Pull" ]
+    },
+    {
+      "Name": "Adductor Machine Squeeze",
+      "Description": "A machine-based exercise targeting the groin muscles using an adductor machine.",
+      "Difficulty": "Beginner",
+      "TypeOfMachine": "Machine",
+      "TargetMuscle": "Groin",
+      "TargetInjury": [ "Groin Pull" ]
+    },
+    {
     "Name": "Hamstring Stretch",
     "Description": "A stretching exercise to relieve tension in the hamstring muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Hamstrings",
     "TargetInjury": [ "Hamstring Strain" ]
-  },
-  {
+    },
+    {
     "Name": "Nordic Hamstring Curls",
     "Description": "A strengthening exercise for the hamstrings.",
     "Difficulty": "InterMediate",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Hamstrings",
     "TargetInjury": [ "Hamstring Strain" ]
-  },
-  {
+    },
+    {
     "Name": "Quad Stretch",
     "Description": "A stretching exercise to relieve tension in the quadriceps muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Quads",
     "TargetInjury": [ "Quadriceps Strain" ]
-  },
-  {
+    },
+    {
     "Name": "Step-Ups (Low Impact)",
     "Description": "A low-impact exercise to strengthen the quadriceps.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Quads",
     "TargetInjury": [ "Quadriceps Strain" ]
-  },
-  {
+    },
+    {
     "Name": "Straight Leg Raises",
     "Description": "A rehabilitation exercise to strengthen the quadriceps without bending the knee.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Quads",
     "TargetInjury": [ "Knee Ligament Injury (ACL, MCL, etc.)" ]
-  },
-  {
+    },
+    {
     "Name": "Wall Sit (Partial Range)",
     "Description": "A partial-range wall sit to strengthen the quadriceps while minimizing knee strain.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Quads",
     "TargetInjury": [ "Knee Ligament Injury (ACL, MCL, etc.)" ]
-  },
-  {
+    },
+    {
     "Name": "Pelvic Tilts",
     "Description": "A gentle exercise to mobilize the lower back and pelvis.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Lower Back",
     "TargetInjury": [ "Herniated Disc" ]
-  },
-  {
+    },
+    {
     "Name": "Core Activation Exercises",
     "Description": "A series of exercises to engage and strengthen the core muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Core",
     "TargetInjury": [ "Herniated Disc" ]
-  },
-  {
+    },
+    {
     "Name": "Piriformis Stretch",
     "Description": "A stretch to relieve tension in the piriformis muscle and alleviate sciatic pain.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Glutes",
     "TargetInjury": [ "Sciatica" ]
-  },
-  {
+    },
+    {
     "Name": "Ankle Circles",
     "Description": "A rehabilitation exercise to improve ankle mobility.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Ankles",
     "TargetInjury": [ "Ankle Sprain" ]
-  },
-  {
+    },
+    {
     "Name": "Resistance Band Dorsiflexion",
     "Description": "A rehabilitation exercise for ankle injuries using a resistance band.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Resistance Band",
     "TargetMuscle": "Ankles",
     "TargetInjury": [ "Ankle Sprain" ]
-  },
-  {
+    },
+    {
     "Name": "Bicep Stretch",
     "Description": "A stretching exercise to relieve tension in the bicep muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Biceps",
     "TargetInjury": [ "Bicep Tendonitis" ]
-  },
-  {
+    },
+    {
     "Name": "Isometric Bicep Holds",
     "Description": "A static exercise to strengthen the biceps without movement.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Biceps",
     "TargetInjury": [ "Bicep Tendonitis" ]
-  },
-  {
+    },
+    {
     "Name": "Tricep Stretch",
     "Description": "A stretching exercise to relieve tension in the tricep muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Triceps",
     "TargetInjury": [ "Tricep Tendonitis" ]
-  },
-  {
+    },
+    {
     "Name": "Isometric Tricep Holds",
     "Description": "A static exercise to strengthen the triceps without movement.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Triceps",
     "TargetInjury": [ "Tricep Tendonitis" ]
-  },
-  {
+    },
+    {
     "Name": "Chest Stretch",
     "Description": "A stretching exercise to relieve tension in the chest muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Chest",
     "TargetInjury": [ "Pectoral Muscle Strain" ]
-  },
-  {
+    },
+    {
     "Name": "Isometric Chest Holds",
     "Description": "A static exercise to strengthen the chest muscles without movement.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Chest",
     "TargetInjury": [ "Pectoral Muscle Strain" ]
-  },
-  {
+    },
+    {
     "Name": "Lat Stretch",
     "Description": "A stretching exercise to relieve tension in the latissimus dorsi muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Back",
     "TargetInjury": [ "Latissimus Dorsi Strain" ]
-  }
-]
+    }
+  ]

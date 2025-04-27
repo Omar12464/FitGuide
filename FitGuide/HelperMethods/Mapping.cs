@@ -15,12 +15,7 @@ namespace FitGuide.HelperMethods
 
             CreateMap<UpdateUserMetricsDTO, UserMetrics>().ReverseMap()
                 .ForAllMembers(opt => opt.Condition((src, dest, srcmember) => src != null));
-            //createmap<usergoaldto, usergoal>().reversemap()
-            //    .formember(dest => dest.targetbmi, opt => opt.mapfrom(src => src.goaltempelate.targetbmi))
-            //    .formember(dest => dest.targetmusclemass, opt => opt.mapfrom(src => src.goaltempelate.targetmusclemass))
-            //    .formember(dest => dest.name, opt => opt.mapfrom(src => src.goaltempelate.name))
-            //    .formember(dest => dest.targetwatermass, opt => opt.mapfrom(src => src.goaltempelate.targetwatermass))
-            //    .formember(dest => dest.targetweight, opt => opt.mapfrom(src => src.goaltempelate.targetweight));
+            CreateMap<UserGoalDTO, UserGoal>().ReverseMap();
             CreateMap<InjuryUserDTO, UserInjury>().ReverseMap();
             CreateMap<WorkOutExercises, WorkOutExercisesResponseDTO>()
                            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))

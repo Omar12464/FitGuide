@@ -7,6 +7,7 @@
         public float? targetWeight { get; set; }
         public float? targetMuscleMass { get; set; }
         public float? targetWaterMass { get; set; }
+        public float? targetFat { get; set; }
         public string description { get; set; }
     }
 }

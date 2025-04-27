@@ -268,7 +268,7 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "The Goal isnot found" } });
             }
-            var bmi =  _userMetrics.CalculateBMI(userGoal.TargetWeight, userHeight);
+            var bmi =  _userMetrics.CalculateBMI(userGoal.TargetWeight??0, userHeight);
             userGoal.TargetBMI = bmi;
             if (userGoal.TargetMuscleMass.HasValue)
             {

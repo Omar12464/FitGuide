@@ -37,7 +37,7 @@ namespace ServiceLayer
 
             if (bmi < 18.5)
             {
-                return WeightCategory.Underweight;               
+                return WeightCategory.Underweight;
             }
             else if (bmi >= 18.5 && bmi < 24.9)
             {

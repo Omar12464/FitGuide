@@ -83,7 +83,7 @@ namespace FitGuide.Controllers
                 .GroupBy(we => we.workOutPlan.Id) // Group by workout plan ID
                 .Select(group => new
                 {
-                    UserId = user.Id,
+                    UserName = user.FullName,
                     WorkOutPlan = new
                     {
                         Name = group.First().workOutPlan.Name,
