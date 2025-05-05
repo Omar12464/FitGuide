@@ -20,6 +20,7 @@ using Repository;
 using Repository.Repositories;
 using ServiceLayer;
 using System.Text;
+using System.Text.Json;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace FitGuide
@@ -30,6 +31,16 @@ namespace FitGuide
         {
             var builder = WebApplication.CreateBuilder(args);
             var _configuration = builder.Configuration;
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173") // Replace with your frontend URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials(); // Allow credentials (if needed)
+                });
+            });
 
             // Add services to the container.
 
@@ -127,6 +138,8 @@ namespace FitGuide
 
                 }
 
+
+                app.UseCors("AllowFrontend");
                 app.UseMiddleware<ExceptionMiddleWare>();
                 // Configure the HTTP request pipeline.
                 if (app.Environment.IsDevelopment())
@@ -135,7 +148,7 @@ namespace FitGuide
                     app.UseSwaggerUI();
                 }
                 app.UseMiddleware<ProfileTimerMiddleWare>();
-                app.UseHttpsRedirection();
+                //app.UseHttpsRedirection();
 
                 app.UseAuthentication();
                 app.UseAuthorization();

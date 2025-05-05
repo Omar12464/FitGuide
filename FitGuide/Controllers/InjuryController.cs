@@ -28,6 +28,13 @@ namespace FitGuide.Controllers
             _repoInjury = repoInjury;
             _repoUserInjury = repoUserInjury;
         }
+        [HttpGet("GetInjuries")]
+        public async Task<ActionResult> GetInjuries()
+        {
+            var goals = await _repoInjury.GetAllAsync();
+            var goalName = goals.Select(g => g.Name).ToList();
+            return Ok(goalName);
+        }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("AddInjury")]
         public async Task<ActionResult<InjuryUserDTO>> AddInjury(UserInjuryDTO userInjury)
@@ -82,6 +89,7 @@ namespace FitGuide.Controllers
             }).ToList();
             return Ok(userInjuries);
         }
+
 
     }
 }

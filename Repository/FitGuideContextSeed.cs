@@ -171,7 +171,19 @@ namespace Repository
             {
                 Console.WriteLine($"Error deserializing JSON: {ex.Message}");
             }
-
+            var allergiesdata=File.ReadAllText("../Repository/JSONfiles/Allergies.json");
+            var allergies = JsonSerializer.Deserialize<List<Allergy>>(allergiesdata, options);
+            if (allergiesdata.Count() > 0)
+            {
+                if (fitGuideContext.Allergy.Count() == 0 || !fitGuideContext.Allergy.Any())
+                {
+                    foreach (var allergy in allergies)
+                    {
+                        fitGuideContext.Set<Allergy>().Add(allergy);
+                    }
+                    await fitGuideContext.SaveChangesAsync();
+                }
+            }
         }
  }
 }

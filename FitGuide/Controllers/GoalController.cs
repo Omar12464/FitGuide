@@ -39,6 +39,14 @@ namespace FitGuide.Controllers
             _weightCategoryRanges = weightCategoryRanges;
             _weightCategoryTargets = weightCategoryTargets;
         }
+
+        [HttpGet("GetAllGoals")]
+        public async Task<ActionResult> GetAllGoals()
+        {
+            var goals=await _repoGoalTemplate.GetAllAsync();
+            var goalName=goals.Select(g=>g.name).ToList();
+            return Ok(goalName);
+        }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("SelectGoal")]
         public async Task<ActionResult> SelectGoal(string GoalName)

@@ -11,5 +11,6 @@ namespace Core
     public class Allergy:ModelBase
     {
         public string Name { get; set; }
+        public ICollection<UserAllergy> userAllergies { get; set; }
     }
 }

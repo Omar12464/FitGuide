@@ -158,15 +158,16 @@ namespace Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AllergyId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("AllergyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AllergyId");
 
                     b.HasIndex("UserId", "AllergyId")
                         .IsUnique();
@@ -417,6 +418,17 @@ namespace Repository.Migrations
                     b.ToTable("WorkOutPlans");
                 });
 
+            modelBuilder.Entity("Core.Identity.Entities.UserAllergy", b =>
+                {
+                    b.HasOne("Core.Allergy", "allergy")
+                        .WithMany("userAllergies")
+                        .HasForeignKey("AllergyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("allergy");
+                });
+
             modelBuilder.Entity("Core.Identity.Entities.UserInjury", b =>
                 {
                     b.HasOne("Core.Injury", "injury")
@@ -445,6 +457,11 @@ namespace Repository.Migrations
                     b.Navigation("exercise");
 
                     b.Navigation("workOutPlan");
+                });
+
+            modelBuilder.Entity("Core.Allergy", b =>
+                {
+                    b.Navigation("userAllergies");
                 });
 
             modelBuilder.Entity("Core.Exercise", b =>

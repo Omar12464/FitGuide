@@ -1,0 +1,53 @@
+[
+  {
+    "Name": "Peanut Allergy"
+  },
+  {
+    "Name": "Tree Nut Allergy"
+  },
+  {
+    "Name": "Milk Allergy"
+  },
+  {
+    "Name": "Egg Allergy"
+  },
+  {
+    "Name": "Shellfish Allergy"
+  },
+  {
+    "Name": "Fish Allergy"
+  },
+  {
+    "Name": "Soy Allergy"
+  },
+  {
+    "Name": "Wheat Allergy"
+  },
+  {
+    "Name": "Sesame Allergy"
+  },
+  {
+    "Name": "Mustard Allergy"
+  },
+  {
+    "Name": "Celery Allergy"
+  },
+  {
+    "Name": "Lupin Allergy"
+  },
+  {
+    "Name": "Molluscs Allergy"
+  },
+  {
+    "Name": "Sulfite Sensitivity"
+  },
+  {
+    "Name": "Gluten Intolerance (Celiac Disease)"
+  },
+  {
+    "Name": "Fruit Allergy (e.g., Kiwi, Avocado)"
+  },
+  {
+    "Name": "Legume Allergy (e.g., Lentils, Chickpeas)"
+  }
+]

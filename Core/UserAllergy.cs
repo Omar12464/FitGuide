@@ -11,7 +11,8 @@ namespace Core.Identity.Entities
     public class UserAllergy : ModelBase
     {
         public string UserId { get; set; }
-        public List<int> AllergyId { get; set; } = new List<int>();
+        public int AllergyId { get; set; }
+        public Allergy allergy { get; set; }
 
     }
 }

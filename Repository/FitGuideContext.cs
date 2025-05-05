@@ -118,6 +118,12 @@ namespace Repository
             {
                 entity.HasKey(e => e.Id);
             });
+            modelBuilder.Entity<UserAllergy>(entity =>
+            {
+                entity.HasKey(entity => entity.Id);
+                entity.HasIndex(ua => new { ua.UserId, ua.AllergyId }).IsUnique();
+                entity.HasOne(ua => ua.allergy).WithMany(ua => ua.userAllergies).HasForeignKey(ua => ua.AllergyId);
+            });
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
