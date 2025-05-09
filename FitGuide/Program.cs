@@ -109,6 +109,15 @@ namespace FitGuide
 
                }
               );
+            //builder.WebHost.ConfigureKestrel(serverOptions =>
+            //{
+            //    // Get the PORT environment variable provided by Railway
+            //    var port = Environment.GetEnvironmentVariable("PORT");
+            //    if (!string.IsNullOrEmpty(port))
+            //    {
+            //        serverOptions.ListenAnyIP(int.Parse(port));
+            //    }
+            //});
 
 
             //builder.services.addauthentication(options =>
@@ -142,13 +151,12 @@ namespace FitGuide
                 app.UseCors("AllowFrontend");
                 app.UseMiddleware<ExceptionMiddleWare>();
                 // Configure the HTTP request pipeline.
-                if (app.Environment.IsDevelopment())
-                {
+                
                     app.UseSwagger();
                     app.UseSwaggerUI();
-                }
+                
                 app.UseMiddleware<ProfileTimerMiddleWare>();
-                //app.UseHttpsRedirection();
+                app.UseHttpsRedirection();
 
                 app.UseAuthentication();
                 app.UseAuthorization();

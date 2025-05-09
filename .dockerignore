@@ -1,0 +1,35 @@
+# Ignore git directory
+.git/
+.gitignore
+
+# Ignore .NET build artifacts
+**/bin/
+**/obj/
+
+# Ignore development files
+**/*.user
+**/*.suo
+**/.vs/
+**/.vscode/
+.DS_Store
+Thumbs.db
+
+# Ignore Docker files
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Ignore all markdown files
+*.md
+LICENSE
+
+# Ignore logs
+*.log
+
+# Ignore test projects
+**/[Tt]ests/
+**/[Tt]est[Rr]esults/
+
+# Ignore other unnecessary files
+**/node_modules/
+**/.idea/
