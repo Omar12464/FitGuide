@@ -36,6 +36,14 @@ namespace FitGuide.Controllers
             _repoWorkoutExercise = repoWorkoutExercise;
         }
 
+        [HttpGet("Show WorkOut Plans")]
+        public async Task<ActionResult> GetAllWorkOutPlans()
+        {
+            var workoutplans=await _fitGuideContext.WorkOutPlans.ToListAsync();
+            return Ok(workoutplans);
+        }
+
+
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("GenerateWorkOut")]
         public async Task<ActionResult> GenerateWorkOutPlan(string planType)
@@ -45,10 +53,15 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "User UnAuthorized" } });
             }
-
+            var workoutexercsie = await _fitGuideContext.workOutExercises.Where(we => user.Id == we.UserId && we.IsActive == true).ToListAsync();
+            if (workoutexercsie.Any())
+            {
+                return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "User has already have a workoutplan" } });
+            }
             try
             {
                 await _genrateWorkOutService.GeneratePersonalizedPlans(user.Id, planType);
+
                 return Ok(new { Message = "Workout plan generated successfully." });
             }
             catch (ArgumentException ex)
@@ -56,9 +69,43 @@ namespace FitGuide.Controllers
                 return BadRequest(new ApiValidationErrorResponse { Errors = new[] { ex.Message } });
             }
         }
-
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("GetMyWorkOutPlan")]
+        [HttpPut("updateWorkOut")]
+        public async Task<ActionResult> UpdateWorkOutPlan(string planType)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "User UnAuthorized" } });
+            }
+            var workoutexercsie = await _repoWorkoutExercise.GetAllAsync();
+            if(!workoutexercsie .Any() )
+            {
+                return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "No Workout Plans already generated" } });
+            }
+            var worksduplicate = workoutexercsie.Where(u => user.Id.Equals(u.UserId) && u.IsActive == true);
+            var currentPlanType = worksduplicate.FirstOrDefault()?.workOutPlan?.Name; // Get the name of the current active plan
+            if (currentPlanType != null && currentPlanType.Equals(planType, StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest(new ApiValidationErrorResponse { Errors = new[] { $"You are already on the '{planType}' workout plan." } });
+            }
+            foreach (var exercise in workoutexercsie)
+            {
+                exercise.IsActive = false;
+            }
+            try
+            {
+                await _genrateWorkOutService.GeneratePersonalizedPlans(user.Id, planType);
+
+                return Ok(new { Message = "Workout plan generated successfully." });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new ApiValidationErrorResponse { Errors = new[] { ex.Message } });
+            }
+        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("GetMyWorkOutPlan")]
         public async Task<ActionResult> GetWorkoutPlans()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -68,8 +115,9 @@ namespace FitGuide.Controllers
             }
             // Fetch the raw data from the database
             var workouts = await _fitGuideContext.workOutExercises
-                .Where(we => we.UserId == user.Id)
+                .Where(we => we.UserId == user.Id&&we.IsActive== true)
                 .Include(we => we.workOutPlan)
+                .OrderByDescending(we => we.workOutPlan)
                 .Include(we => we.exercise)
                 .ToListAsync();
 
@@ -80,7 +128,8 @@ namespace FitGuide.Controllers
 
             // Group exercises by workout plan
             var groupedWorkouts = workouts
-                .GroupBy(we => we.workOutPlan.Id) // Group by workout plan ID
+                .Where(we=>we.IsActive==true)
+                .GroupBy(we => we.workOutPlan.Id)// Group by workout plan ID
                 .Select(group => new
                 {
                     UserName = user.FullName,

@@ -57,7 +57,8 @@ namespace FitGuide.Controllers
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
 
-            var userMetrics = await _repo.GetFirstAsync(u => u.UserId.Equals(user.Id));
+            var userMetricsAll = await _repo.GetAllAsync();
+            var userMetrics = userMetricsAll.OrderByDescending(w=>w.CreatedAt).FirstOrDefault();
             if (userMetrics == null)
             {
                 return NotFound(new ApiExceptionResponse(404, "User metrics not found."));

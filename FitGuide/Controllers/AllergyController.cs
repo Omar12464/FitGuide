@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 
 namespace FitGuide.Controllers
@@ -23,6 +24,12 @@ namespace FitGuide.Controllers
             _userManager = userManager;
             _repoAllergy = repoAllergy;
             _fitGuideContext = fitGuideContext;
+        }
+        [HttpGet("Show All Allergies")]
+        public async Task<ActionResult> GetAllAllergies()
+        {
+            var workoutplans = await _fitGuideContext.Allergy.ToListAsync();
+            return Ok(workoutplans);
         }
         [HttpGet("GetAllergies")]
         public async Task<ActionResult> GetAllergies()

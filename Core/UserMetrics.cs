@@ -40,7 +40,7 @@ namespace Core
         public float? MuscleMass { get; set; }
         public float? WaterMass { get; set; }
         public WeightCategory weightCategory { get; set; }
-        public FitnessLevel fitnessLevel { get; set; }
+        public FitnessLevel? fitnessLevel { get; set; } 
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
         //public User user { get; set; }
     }

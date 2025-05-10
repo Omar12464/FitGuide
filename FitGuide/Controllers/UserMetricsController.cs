@@ -71,12 +71,13 @@ namespace FitGuide.Controllers
             }
             if (userMetrics == null) { return BadRequest(new ApiExceptionResponse(400)); }
 
-            var existedmetrics = await _repo.GetFirstAsync(ua => ua.UserId == user.Id);
+            var existedmetricsdata = await _repo.GetAllAsync();
+            var existedmetrics = existedmetricsdata.OrderByDescending(u => u.CreatedAt).FirstOrDefault();
             existedmetrics.Height = userMetrics.Height ?? existedmetrics.Height;
             existedmetrics.Weight = userMetrics.Weight ?? existedmetrics.Weight;
             existedmetrics.MuscleMass = userMetrics.MuscleMass ?? existedmetrics?.MuscleMass;
             existedmetrics.WaterMass = userMetrics.WaterMass ?? existedmetrics?.WaterMass;
-            existedmetrics.Fat = userMetrics.Fat ?? existedmetrics.Fat;
+            existedmetrics.fitnessLevel = userMetrics.fitnessLevel ?? existedmetrics.fitnessLevel;
             existedmetrics.BMI = _userMetrics.CalculateBMI(existedmetrics.Weight, existedmetrics.Height);
             existedmetrics.weightCategory = _weightCategory.GetUserWeightCategory(existedmetrics.BMI??0, existedmetrics.Fat??0);
 
@@ -100,7 +101,9 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
-            var userMetrics =await _fitGuideContext.userMetrics.Where(u=>u.Id.Equals(user.Id)).ToListAsync();
+            var userMetricsData = await _repo.GetAllAsync();
+            var userMetrics = userMetricsData.Where(u => u.UserId.Equals(user.Id)).ToList();
+
 
             var allMetrics = userMetrics.Select(group=>new
             {

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ServiceLayer
 {
@@ -47,26 +48,26 @@ namespace ServiceLayer
         }
         public async Task<List<Exercise>> FilterExrcises(string userId)
         {
-            var userMetrcs = await _fitGuideContext.userMetrics.FirstOrDefaultAsync(u => u.UserId.Equals(userId));
+            var usermetricsData=await _repoMetrics.GetAllAsync();
+            var userMetrcs =  _fitGuideContext.userMetrics.Where(u => u.UserId.Equals(userId)).OrderByDescending(u=>u.CreatedAt).FirstOrDefault();
             var userInjuries = await _fitGuideContext.userInjuries
                            .Include(ui => ui.injury) // Include injury details
                            .Where(ui => ui.UserId == userId) // Only active injuries
                            .ToListAsync();
-            if (!userInjuries.Any()) { return new List<Exercise>(); }
+            var query = _fitGuideContext.Exercise.AsQueryable();
+
             var affectedBodyParts = userInjuries.Select(ui => ui.injury.AffectedBodyPart.ToLowerInvariant()).Distinct().ToList();
             var contraindicatedExercises = userInjuries
-            .Where(i => affectedBodyParts.Contains(i.injury.AffectedBodyPart.ToLowerInvariant()))
-            .SelectMany(i => i.injury.ContraindicatedExercises)
-            .Distinct()
-            .ToList();
-            var query=_fitGuideContext.Exercise.AsQueryable();
+              .Where(i => affectedBodyParts.Contains(i.injury.AffectedBodyPart.ToLowerInvariant()))
+              .SelectMany(i => i.injury.ContraindicatedExercises)
+              .Distinct()
+              .ToList();
             query = query.Where(e => !contraindicatedExercises.Contains(e.Name));
-            var safeExercises =  userInjuries.Where(i => affectedBodyParts.Contains(i.injury.AffectedBodyPart.ToLowerInvariant())).SelectMany(i=>i.injury.SuitableEquipment).Distinct().ToList();
-            if(safeExercises.Any()) { query = query.Where(e => safeExercises.Contains(e.TypeOfMachine)); }
-            var filterexercise=await query.ToListAsync();
-            var prioritizedExercises = filterexercise.OrderByDescending(e => e.Difficulty <= userMetrcs.fitnessLevel).ThenByDescending(e => !affectedBodyParts.Contains(e.TargetMuscle.ToLowerInvariant())).ToList();
-            
-            
+            var safeExercises = userInjuries.Where(i => affectedBodyParts.Contains(i.injury.AffectedBodyPart.ToLowerInvariant())).SelectMany(i => i.injury.SuitableEquipment).Distinct().ToList();
+            if (safeExercises.Any()) { query = query.Where(e => safeExercises.Contains(e.TypeOfMachine)); }
+            var filterexercise = await query.ToListAsync();
+            var prioritizedExercises = filterexercise.OrderByDescending(e => e.Difficulty <= userMetrcs.fitnessLevel).ThenByDescending(e => e.TargetMuscle.ToLowerInvariant()).ToList();
+
             return prioritizedExercises;
 
         }
@@ -168,7 +169,9 @@ namespace ServiceLayer
                         ExerciseId = exercise.Id,
                         NumberOfSets = 3,
                         NumberOfReps = 10,
-                        UserId = userId
+                        UserId = userId,
+                        CreatedAt = DateTime.UtcNow,
+                        IsActive = true,
 
                     };
                    await _repoWorkExercise.AddAsync(workooutexercises);
@@ -178,7 +181,7 @@ namespace ServiceLayer
 
         
 
-            public List<Exercise> GetSafeExercisesForCategory(IEnumerable<Exercise> exercises, IEnumerable<string> muscleGroups, IEnumerable<string> injuryAffectedParts)
+            public List<Exercise> GetSafeExercisesForCategory(IEnumerable<Exercise> exercises, IEnumerable<string> muscleGroups, IEnumerable<string>? injuryAffectedParts)
             {
                  return exercises
                 .Where(e => muscleGroups.Contains(e.TargetMuscle)) // Filter by muscle group

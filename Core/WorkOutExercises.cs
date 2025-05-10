@@ -19,5 +19,7 @@ namespace Core
         public int NumberOfSets { get; set; } = 3;
         public int NumberOfReps { get; set; } = 10;
         public string UserId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsActive { get; set; } = false;
     }
 }

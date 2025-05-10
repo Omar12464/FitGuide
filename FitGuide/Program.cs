@@ -89,6 +89,7 @@ namespace FitGuide
                 {
                     options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
                 });
+            builder.Logging.AddConsole();
 
             builder.Services.Configure<ApiBehaviorOptions>(
                options =>
@@ -170,7 +171,7 @@ namespace FitGuide
                 //});
 
                 app.MapControllers();
-
+                Console.WriteLine("Application started...");
                 app.Run();
             }
         }

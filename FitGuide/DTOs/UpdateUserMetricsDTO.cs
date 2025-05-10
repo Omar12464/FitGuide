@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Core;
+using System.ComponentModel.DataAnnotations;
 
 namespace FitGuide.DTOs
 {
@@ -11,5 +12,6 @@ namespace FitGuide.DTOs
         public float? Fat { get; set; }
         public float? MuscleMass { get; set; }
         public float? WaterMass { get; set; }
+        public FitnessLevel? fitnessLevel { get; set; }
     }
 }
