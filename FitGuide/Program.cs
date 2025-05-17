@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Writers;
 using Repository;
 using Repository.Repositories;
@@ -31,6 +32,15 @@ namespace FitGuide
         {
             var builder = WebApplication.CreateBuilder(args);
             var _configuration = builder.Configuration;
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "FitGuide API",
+                    Version = "v1",
+                    Description = "API documentation for the FitGuide application"
+                });
+            });
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowFrontend", policy =>
@@ -113,6 +123,13 @@ namespace FitGuide
 
                }
               );
+            //builder.Services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = " API", Version = "v1" });
+            //    //c.CustomSchemaIds(type => type.ToString());
+            //    //c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            //    //c.DescribeAllParametersInCamelCase();
+            //});
             //builder.WebHost.ConfigureKestrel(serverOptions =>
             //{
             //    // Get the PORT environment variable provided by Railway
@@ -152,13 +169,18 @@ namespace FitGuide
                 }
 
 
+
                 app.UseCors("AllowFrontend");
+
                 app.UseMiddleware<ExceptionMiddleWare>();
                 // Configure the HTTP request pipeline.
-                
-                    app.UseSwagger();
-                    app.UseSwaggerUI();
-                
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "FitGuide API v1");
+                    c.RoutePrefix = "swagger"; // optional
+                });
+
                 app.UseMiddleware<ProfileTimerMiddleWare>();
                 app.UseHttpsRedirection();
 

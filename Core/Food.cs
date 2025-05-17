@@ -16,15 +16,15 @@ namespace Core
 
         // General Information
         public string Name { get; set; } // Name of the food
-        public string Description { get; set; } // Brief description of the food
-        public string Category { get; set; } // Category: Fruits, Vegetables, Grains, Proteins, Dairy, etc.
+        public string? Description { get; set; } // Brief description of the food
+        //public string Category { get; set; } // Category: Fruits, Vegetables, Grains, Proteins, Dairy, etc.
 
         // Nutritional Data (per 100g serving)
         public double CaloriesPerServing { get; set; } // Calories per 100g
         public double ProteinPerServing { get; set; } // Protein content per 100g (in grams)
         public double CarbsPerServing { get; set; } // Carbohydrate content per 100g (in grams)
         public double FatPerServing { get; set; } // Fat content per 100g (in grams)
-        public int ServingSize { get; set; } = 100; // Fixed at "100g"
+        public int ServingSize { get; set; }  // Fixed at "100g"
 
         // Dietary Flags
         public bool IsVegetarian { get; set; } // Vegetarian-friendly
