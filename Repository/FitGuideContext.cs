@@ -26,17 +26,23 @@ namespace Repository
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Food>(entity =>
+            modelBuilder.Entity<FoodItem>(entity =>
             {
                 entity.HasKey(f => f.Id);
 
                 entity.Property(f => f.Name).IsRequired().HasMaxLength(200);
 
-                entity.Property(f => f.Calories).HasColumnType("decimal(10,2)");
-                entity.Property(f => f.Protein).HasColumnType("decimal(10,2)");
-                entity.Property(f => f.Carbs).HasColumnType("decimal(10,2)");
-                entity.Property(f => f.Fats).HasColumnType("decimal(10,2)");
+                entity.Property(f => f.CarbsPerServing).HasColumnType("decimal(10,2)");
+                entity.Property(f => f.ProteinPerServing).HasColumnType("decimal(10,2)");
+                entity.Property(f => f.CarbsPerServing).HasColumnType("decimal(10,2)");
+                entity.Property(f => f.FatPerServing).HasColumnType("decimal(10,2)");
 
+            });
+            modelBuilder.Entity<LogFood>(entity =>
+            {
+                entity.Property(lf => lf.Quantity).HasColumnType("decimal(10,2)");
+                entity.Property(lf => lf.LoggedAt).HasColumnType("datetime");
+                entity.HasOne(lf => lf.foodItem).WithMany(f=>f.logFoods).HasForeignKey(lf => lf.FoodId);
             });
             modelBuilder.Entity<UserMetrics>(e =>
             {
@@ -131,7 +137,10 @@ namespace Repository
 
 
         }
-        public DbSet<Food> Food { get; set; }
+        public DbSet<LogFood> LogFood { get; set; }
+        public DbSet<DailyIntake> dailyIntakes { get; set; }
+
+        public DbSet<FoodItem> Food { get; set; }
         public DbSet<Exercise> Exercise { get; set; }
         public DbSet<Injury> Injury { get; set; }
         public DbSet<Allergy> Allergy { get; set; }

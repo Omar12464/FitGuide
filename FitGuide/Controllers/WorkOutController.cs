@@ -42,7 +42,7 @@ namespace FitGuide.Controllers
             var workoutplans=await _fitGuideContext.WorkOutPlans.ToListAsync();
             return Ok(workoutplans);
         }
-
+        
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("GenerateWorkOut")]

@@ -28,15 +28,18 @@ namespace FitGuide.Controllers
         [HttpGet("Show All Allergies")]
         public async Task<ActionResult> GetAllAllergies()
         {
-            var workoutplans = await _fitGuideContext.Allergy.ToListAsync();
-            return Ok(workoutplans);
+            var goals = await _repoAllergy.GetAllAsync();
+            var goalName = goals.Select(g => g.Name).ToList();
+           
+            return Ok(goalName);
         }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("GetAllergies")]
         public async Task<ActionResult> GetAllergies()
         {
-            var goals = await _repoAllergy.GetAllAsync();
-            var goalName = goals.Select(g => g.Name).ToList();
-            return Ok(goalName);
+            var user = await _userManager.GetUserAsync(User);
+            var allergies = await _fitGuideContext.userAllergies.Where(u=>u.UserId.Equals(user.Id)).Include(u=>u.allergy).ToListAsync();
+            return Ok(allergies);
         }
 
         [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]

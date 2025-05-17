@@ -184,6 +184,19 @@ namespace Repository
                     await fitGuideContext.SaveChangesAsync();
                 }
             }
+            var fooddata = File.ReadAllText("../Repository/JSONfiles/Food.json");
+            var foods = JsonSerializer.Deserialize<List<FoodItem>>(fooddata, options);
+            if (fooddata.Count() > 0)
+            {
+                if (fitGuideContext.Food.Count() == 0 || !fitGuideContext.Food.Any())
+                {
+                    foreach (var food in foods)
+                    {
+                        fitGuideContext.Set<FoodItem>().Add(food);
+                    }
+                    await fitGuideContext.SaveChangesAsync();
+                }
+            }
         }
  }
 }

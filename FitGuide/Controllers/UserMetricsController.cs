@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using ServiceLayer;
+using System.Net.Http.Headers;
 
 namespace FitGuide.Controllers
 {
@@ -21,16 +22,18 @@ namespace FitGuide.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IGeneric<NutritionPlan> _repoNutritionPlan;
         private readonly IGeneric<UserMetrics> _repo;
         private readonly FitGuideContext _fitGuideContext;
         private readonly IWeightCategory _weightCategory;
         private readonly IWeightTarget _weightTarget;
         private readonly IUserMetricsServices _userMetrics;
 
-        public UserMetricsController(UserManager<User> userManager, IMapper mapper, IUserMetricsServices userMetrics, IGeneric<UserMetrics> Repo,FitGuideContext fitGuideContext,IWeightCategory weightCategory, IWeightTarget weightTarget)
+        public UserMetricsController(UserManager<User> userManager, IMapper mapper,IGeneric<NutritionPlan>repoNutritionPlan, IUserMetricsServices userMetrics, IGeneric<UserMetrics> Repo,FitGuideContext fitGuideContext,IWeightCategory weightCategory, IWeightTarget weightTarget)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _repoNutritionPlan = repoNutritionPlan;
             _repo = Repo;
             _fitGuideContext = fitGuideContext;
             _weightCategory = weightCategory;
@@ -72,7 +75,7 @@ namespace FitGuide.Controllers
             if (userMetrics == null) { return BadRequest(new ApiExceptionResponse(400)); }
 
             var existedmetricsdata = await _repo.GetAllAsync();
-            var existedmetrics = existedmetricsdata.OrderByDescending(u => u.CreatedAt).FirstOrDefault();
+            var existedmetrics = existedmetricsdata.OrderByDescending(u => u.CreatedAt).FirstOrDefault(us=>us.UserId==user.Id);
             existedmetrics.Height = userMetrics.Height ?? existedmetrics.Height;
             existedmetrics.Weight = userMetrics.Weight ?? existedmetrics.Weight;
             existedmetrics.MuscleMass = userMetrics.MuscleMass ?? existedmetrics?.MuscleMass;
@@ -80,20 +83,23 @@ namespace FitGuide.Controllers
             existedmetrics.fitnessLevel = userMetrics.fitnessLevel ?? existedmetrics.fitnessLevel;
             existedmetrics.BMI = _userMetrics.CalculateBMI(existedmetrics.Weight, existedmetrics.Height);
             existedmetrics.weightCategory = _weightCategory.GetUserWeightCategory(existedmetrics.BMI??0, existedmetrics.Fat??0);
+            existedmetrics.GymFrequency = userMetrics.GymFrequency;
 
             try
             {
                 _repo.UpdateAsync(existedmetrics);
+
+                
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new ApiExceptionResponse(500, "An error occurred while updating metrics.", ex.Message));
             }
-
+            
             return Ok(existedmetrics);
         }
         [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("GetMetrices")]
+        [HttpGet("GetAllMetrices")]
         public async Task<ActionResult<UserMetricsDTO>> GetMetrcies()
         {
             var user=await _userManager.GetUserAsync(User);
@@ -117,7 +123,8 @@ namespace FitGuide.Controllers
                   MuscleMass=metric.MuscleMass,
                   WaterMass = metric.WaterMass,
                   weightCategory = metric.weightCategory.ToString(),
-                  fitnessLevel=metric.fitnessLevel.ToString()
+                  fitnessLevel=metric.fitnessLevel.ToString(),
+                  GymFrequency = metric.GymFrequency,
                 }).ToList()
 
             });

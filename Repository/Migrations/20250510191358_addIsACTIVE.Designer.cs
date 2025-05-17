@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(FitGuideContext))]
-    partial class FitGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20250510191358_addIsACTIVE")]
+    partial class addIsACTIVE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,38 +40,6 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Allergy");
-                });
-
-            modelBuilder.Entity("Core.DailyIntake", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("TotalCalories")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalCarbs")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalFat")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalProtein")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("dailyIntakes");
                 });
 
             modelBuilder.Entity("Core.Exercise", b =>
@@ -108,7 +79,7 @@ namespace Repository.Migrations
                     b.ToTable("Exercise");
                 });
 
-            modelBuilder.Entity("Core.FoodItem", b =>
+            modelBuilder.Entity("Core.Food", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,93 +87,32 @@ namespace Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("CaloriesPerServing")
-                        .HasColumnType("float");
+                    b.Property<string>("BarCode")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("CarbsPerServing")
+                    b.Property<decimal>("Calories")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("Carbs")
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("FatPerServing")
+                    b.Property<decimal>("Fats")
                         .HasColumnType("decimal(10,2)");
-
-                    b.Property<bool>("IsCeleryFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDairyFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsFishFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsFruitFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsGlutenFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsKosher")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsLegumeFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsLowFODMAP")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsLupinFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMolluscsFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMustardFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsNutFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPeanutFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSesameFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsShellfishFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSoyFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSulfiteFree")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsVegan")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsVegetarian")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsWheatFree")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<decimal>("ProteinPerServing")
+                    b.Property<decimal>("Protein")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("ServingSize")
-                        .HasColumnType("int");
+                    b.Property<float>("ServingSize")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -323,37 +233,6 @@ namespace Repository.Migrations
                     b.ToTable("Injury");
                 });
 
-            modelBuilder.Entity("Core.LogFood", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FoodId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LoggedAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("MyProperty")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(10,2)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FoodId");
-
-                    b.ToTable("LogFood");
-                });
-
             modelBuilder.Entity("Core.NutritionPlan", b =>
                 {
                     b.Property<int>("Id")
@@ -362,24 +241,24 @@ namespace Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("CaloriestTarget")
-                        .HasColumnType("float");
+                    b.Property<float>("CaloriestTarget")
+                        .HasColumnType("real");
 
-                    b.Property<double>("CarbsTarget")
-                        .HasColumnType("float");
+                    b.Property<float>("CarbsTarget")
+                        .HasColumnType("real");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<double>("FatTarget")
-                        .HasColumnType("float");
+                    b.Property<float>("FatTarget")
+                        .HasColumnType("real");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ProteinTarget")
-                        .HasColumnType("float");
+                    b.Property<float>("ProteinTarget")
+                        .HasColumnType("real");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -450,9 +329,6 @@ namespace Repository.Migrations
 
                     b.Property<float?>("Fat")
                         .HasColumnType("real");
-
-                    b.Property<double>("GymFrequency")
-                        .HasColumnType("float");
 
                     b.Property<float>("Height")
                         .HasColumnType("real");
@@ -575,17 +451,6 @@ namespace Repository.Migrations
                     b.Navigation("injury");
                 });
 
-            modelBuilder.Entity("Core.LogFood", b =>
-                {
-                    b.HasOne("Core.FoodItem", "foodItem")
-                        .WithMany("logFoods")
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("foodItem");
-                });
-
             modelBuilder.Entity("Core.WorkOutExercises", b =>
                 {
                     b.HasOne("Core.Exercise", "exercise")
@@ -613,11 +478,6 @@ namespace Repository.Migrations
             modelBuilder.Entity("Core.Exercise", b =>
                 {
                     b.Navigation("workOutExercises");
-                });
-
-            modelBuilder.Entity("Core.FoodItem", b =>
-                {
-                    b.Navigation("logFoods");
                 });
 
             modelBuilder.Entity("Core.Injury", b =>

@@ -15,5 +15,6 @@ namespace FitGuide.DTOs
         public float Fat { get; set; }
         public float? MuscleMass { get; set; }
         public float? WaterMass { get; set; }
+        public double GymFrequency { get; set; }
     }
 }

@@ -21,5 +21,6 @@ namespace Core
         public float? targetWaterMass { get; set; }
         public float? targeFat { get; set; }
         public string? description { get; set; }
+        public bool IsActive { get; set; } = false;
     }
 }

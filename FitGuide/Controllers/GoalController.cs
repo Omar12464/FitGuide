@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 using ServiceLayer;
 
@@ -56,7 +57,18 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
-
+            var userGoals=await _fitGuideContext.userGoals.Where(u=>u.UserId.Equals(user.Id)&&u.IsActive).ToListAsync();
+            var usergoal = userGoals.Select(g => g.name);
+            if (usergoal.Contains(GoalName))
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User has already selected this goal" } });
+            }
+            // Make the current usergoal to be Isactive =false to avoid duplication
+            foreach (var userGoal in userGoals)
+            {
+                userGoal.IsActive = false;
+                _repoGoal.UpdateAsync(userGoal);
+            }
             var userMetricsAll = await _repo.GetAllAsync();
             var userMetrics = userMetricsAll.OrderByDescending(w=>w.CreatedAt).FirstOrDefault();
             if (userMetrics == null)
@@ -133,72 +145,73 @@ namespace FitGuide.Controllers
 
             // Distribute weight change into muscle mass, fat, and water mass based on goal
             float targetFatChange=userMetrics.Fat??0, targetMuscleMassChange, targetWaterMassChange;
+            float targetFatPercentage =0;
             switch (GoalName.ToLower())
             {
                 case "weight loss":
-                    targetFatChange -= 10; // Focus on fat loss
+                    targetFatPercentage -= 10; // Focus on fat loss
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.3f : 0; // Preserve muscle
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.1f : 0; // Minimal water change
                     break;
 
                 case "muscle gain":
-                    targetFatChange -= 5; 
+                    targetFatPercentage -= 5; 
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.8f : 0; // Focus on muscle gain
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.1f : 0; // Minimal water change
                     break;
 
                 case "endurance improvement":
-                    targetFatChange -= 5; 
+                    targetFatPercentage -= 5;
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.4f : 0; // Balanced muscle gain
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.4f : 0; // Higher water mass
                     break;
 
                 case "injury recovery (lower body)":
                 case "injury recovery (upper body)":
-                    targetFatChange -= 10; 
+                    targetFatPercentage -= 10; 
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.3f : 0; // Focus on muscle retention
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.2f : 0; // Good hydration
                     break;
 
                 case "mobility and flexibility":
-                    targetFatChange -= 4;
+                    targetFatPercentage -= 4;
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.2f : 0;  Minimal muscle gain
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.2f : 0; // Balanced water mass
                     break;
 
                 case "general health maintenance":
-                    targetFatChange -= 5;
+                    targetFatPercentage -= 5;
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.5f : 0;  Balanced muscle gain
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.2f : 0; // Balanced water mass
                     break;
 
                 case "strength training for beginners":
-                    targetFatChange -= 5;
+                    targetFatPercentage -= 5;
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.7f : 0; Focus on muscle gain
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.1f : 0; // Minimal water change
                     break;
 
                 case "post-pregnancy fitness":
-                    targetFatChange -= 10; // Moderate fat loss
+                    targetFatPercentage -= 10; // Moderate fat loss
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.3f : 0; // Balanced muscle gain
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.2f : 0; // Balanced water mass
                     break;
 
                 case "athletic performance enhancement":
-                    targetFatChange -= 8; // Minimal fat gain
+                    targetFatPercentage -= 8; // Minimal fat gain
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.8f : 0; // Focus on muscle gain
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.1f : 0; // Minimal water change
                     break;
 
                 default:
-                    targetFatChange -= 3; // Default fat change
+                    targetFatPercentage -= 3; // Default fat change
                     //targetMuscleMassChange = weightChange > 0 ? weightChange * 0.5f : 0; // Default muscle gain
                     //targetWaterMassChange = weightChange > 0 ? weightChange * 0.2f : 0; // Default water change
                     break;
             }
 
             // Calculate absolute target values
-
+            targetFatChange += targetFatPercentage;
             // Ensure target fat percentage is realistic
             targetFatChange = Math.Max(targetFatChange, 5.0f); // Minimum healthy fat percentage
 
@@ -237,7 +250,9 @@ namespace FitGuide.Controllers
                 targetMuscleMass = absoluteTargetMuscleMass,
                 targetWaterMass = absoluteTargetWaterMass,
                 targetWeight = targetWeight,
-                targeFat = absoluteTargetFat
+                targeFat = absoluteTargetFat,
+                IsActive = true
+
             };
 
             await _repoGoal.AddAsync(userG);
@@ -314,7 +329,7 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
-            var usergoal = await _repoGoal.GetFirstAsync(ug => ug.UserId == user.Id);
+            var usergoal = await _repoGoal.GetFirstAsync(ug => ug.IsActive == true && ug.UserId.Equals(user.Id));
             if (usergoal == null)
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Goal Not Related To You" } });
@@ -327,7 +342,7 @@ namespace FitGuide.Controllers
             });
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("GetGoal")]
+        [HttpGet("GetGoal")]
         public async Task<ActionResult> GetGoal()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -335,7 +350,7 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
-            var userGoal =await _repoGoal.GetFirstAsync(u=>u.UserId.Equals(user.Id));
+            var userGoal =await _repoGoal.GetFirstAsync(u=>u.IsActive&&u.UserId.Equals(user.Id));
             var mapper= new UserGoalDTO
             {   
                 name=userGoal.name,
