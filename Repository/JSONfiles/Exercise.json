@@ -5,7 +5,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Back",
-    "TargetInjury": [ "None" ]
+    "TargetInjury": [ "None" ],
+    "YouTubeLink": "https://youtu.be/UCXxvVItLoM?si=uJzuweTY28YpmKu8 "
   },
   {
     "Name": "Lat Pulldown",
@@ -13,7 +14,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Machine",
     "TargetMuscle": "Back",
-    "TargetInjury": [ "Shoulder Impingement Syndrome" ]
+    "TargetInjury": [ "Shoulder Impingement Syndrome" ],
+    "YouTubeLink": "https://youtube.com/shorts/H3yH5T_H_rc?si=pHHjw5LiBkjTp78m"
   },
   {
     "Name": "Leg Press",
@@ -21,7 +23,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Machine",
     "TargetMuscle": "Legs",
-    "TargetInjury": [ "Knee Ligament Injury ACL, MCL, etc.", "Patellar Tendonitis" ]
+    "TargetInjury": [ "Knee Ligament Injury ACL, MCL, etc.", "Patellar Tendonitis" ],
+    "YouTubeLink": "https://youtu.be/uTeqMaWQLL8?si=fUKbkANGFkKQudER "
   },
   {
     "Name": "Chest Fly Machine",
@@ -29,7 +32,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Machine",
     "TargetMuscle": "Chest",
-    "TargetInjury": [ "Pectoral Muscle Strain" ]
+    "TargetInjury": [ "Pectoral Muscle Strain" ],
+    "YouTubeLink": "https://youtube.com/shorts/jb3fuw-V7a4?si=8JHeck54qj55GtdC"
   },
   {
     "Name": "Shoulder Blade Squeezes",
@@ -37,7 +41,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Resistance Band",
     "TargetMuscle": "Shoulders",
-    "TargetInjury": [ "Rotator Cuff Tear" ]
+    "TargetInjury": [ "Rotator Cuff Tear" ],
+    "YouTubeLink": "https://youtu.be/Ac_YCJ3zBTc?si=rA0nPkPQbj78C-gs "
   },
   {
     "Name": "External Rotations",
@@ -45,7 +50,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Shoulders",
-    "TargetInjury": [ "Rotator Cuff Tear" ]
+    "TargetInjury": [ "Rotator Cuff Tear" ],
+    "YouTubeLink": "https://youtu.be/EUMsYC_W3aI?si=b7bOiUMN_3RpejOl "
   },
   {
     "Name": "Wall Slides",
@@ -53,7 +59,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Resistance Band",
     "TargetMuscle": "Shoulders",
-    "TargetInjury": [ "Shoulder Impingement Syndrome" ]
+    "TargetInjury": [ "Shoulder Impingement Syndrome" ],
+    "YouTubeLink": "https://youtube.com/shorts/wAb_LNjfnIw?si=VRAOG34J1Goh6lQk "
   },
   {
     "Name": "Scapular Retractions",
@@ -61,7 +68,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Shoulders",
-    "TargetInjury": [ "Shoulder Impingement Syndrome" ]
+    "TargetInjury": [ "Shoulder Impingement Syndrome" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=JHuxSYXfTVE "
   },
   {
     "Name": "Eccentric Wrist Extensions",
@@ -69,7 +77,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Forearms",
-    "TargetInjury": [ "Tennis Elbow Lateral Epicondylitis" ]
+    "TargetInjury": [ "Tennis Elbow Lateral Epicondylitis" ],
+    "YouTubeLink": "https://youtube.com/shorts/ap9jSCn-Res?si=hruLn2YGJQMZzhR8 "
   },
   {
     "Name": "Forearm Stretches",
@@ -77,7 +86,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Forearms",
-    "TargetInjury": [ "Tennis Elbow (Lateral Epicondylitis)" ]
+    "TargetInjury": [ "Tennis Elbow (Lateral Epicondylitis)" ],
+    "YouTubeLink": "https://youtube.com/shorts/FXHo-OZ0qvc?si=ewakTgPv-ee7U7LT"
   },
   {
     "Name": "Eccentric Wrist Flexions",
@@ -85,7 +95,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Forearms",
-    "TargetInjury": [ "Golfer's Elbow (Medial Epicondylitis)" ]
+    "TargetInjury": [ "Golfer's Elbow (Medial Epicondylitis)" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
   },
   {
     "Name": "Forearm Pronation/Supination",
@@ -93,7 +104,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Forearms",
-    "TargetInjury": [ "Golfer's Elbow (Medial Epicondylitis)" ]
+    "TargetInjury": [ "Golfer's Elbow (Medial Epicondylitis)" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=6Nj3QZ8e1Zo "
   },
   {
     "Name": "Hip Flexor Stretch",
@@ -101,7 +113,8 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Hip Flexors",
-    "TargetInjury": [ "Hip Flexor Strain" ]
+    "TargetInjury": [ "Hip Flexor Strain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=1qnGzSJTYnY "
   },
   {
     "Name": "Glute Bridges",
@@ -109,198 +122,223 @@
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Glutes",
-    "TargetInjury": [ "Hip Flexor Strain" ]
+    "TargetInjury": [ "Hip Flexor Strain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
   },
-    {
-      "Name": "Side Lying Leg Lift",
-      "Description": "A strengthening exercise to target the hip abductors and improve groin stability.",
-      "Difficulty": "Beginner",
-      "TypeOfMachine": "Bodyweight",
-      "TargetMuscle": "Groin",
-      "TargetInjury": [ "Groin Pull" ]
-    },
-    {
-      "Name": "Standing Groin Stretch",
-      "Description": "A stretching exercise to relieve tension in the groin muscles while standing.",
-      "Difficulty": "Beginner",
-      "TypeOfMachine": "Bodyweight",
-      "TargetMuscle": "Groin",
-      "TargetInjury": [ "Groin Pull" ]
-    },
-    {
-      "Name": "Seated Groin Stretch",
-      "Description": "A seated stretching exercise to relieve tension in the groin muscles.",
-      "Difficulty": "Beginner",
-      "TypeOfMachine": "Bodyweight",
-      "TargetMuscle": "Groin",
-      "TargetInjury": [ "Groin Pull" ]
-    },
-    {
-      "Name": "Lateral Band Walk",
-      "Description": "A resistance band exercise to strengthen the hip abductors and prevent groin injuries.",
-      "Difficulty": "Intermediate",
-      "TypeOfMachine": "Resistance Band",
-      "TargetMuscle": "Groin",
-      "TargetInjury": [ "Groin Pull" ]
-    },
-    {
-      "Name": "Sumo Squat",
-      "Description": "A squat variation targeting the groin and inner thighs, improving strength and flexibility.",
-      "Difficulty": "Intermediate",
-      "TypeOfMachine": "Bodyweight",
-      "TargetMuscle": "Groin",
-      "TargetInjury": [ "Groin Pull" ]
-    },
-    {
-      "Name": "Adductor Machine Squeeze",
-      "Description": "A machine-based exercise targeting the groin muscles using an adductor machine.",
-      "Difficulty": "Beginner",
-      "TypeOfMachine": "Machine",
-      "TargetMuscle": "Groin",
-      "TargetInjury": [ "Groin Pull" ]
-    },
-    {
+  {
+    "Name": "Side Lying Leg Lift",
+    "Description": "A strengthening exercise to target the hip abductors and improve groin stability.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Groin",
+    "TargetInjury": [ "Groin Pull" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
+    "Name": "Standing Groin Stretch",
+    "Description": "A stretching exercise to relieve tension in the groin muscles while standing.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Groin",
+    "TargetInjury": [ "Groin Pull" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
+    "Name": "Seated Groin Stretch",
+    "Description": "A seated stretching exercise to relieve tension in the groin muscles.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Groin",
+    "TargetInjury": [ "Groin Pull" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
+    "Name": "Lateral Band Walk",
+    "Description": "A resistance band exercise to strengthen the hip abductors and prevent groin injuries.",
+    "Difficulty": "Intermediate",
+    "TypeOfMachine": "Resistance Band",
+    "TargetMuscle": "Groin",
+    "TargetInjury": [ "Groin Pull" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
+    "Name": "Sumo Squat",
+    "Description": "A squat variation targeting the groin and inner thighs, improving strength and flexibility.",
+    "Difficulty": "Intermediate",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Groin",
+    "TargetInjury": [ "Groin Pull" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
+    "Name": "Adductor Machine Squeeze",
+    "Description": "A machine-based exercise targeting the groin muscles using an adductor machine.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Machine",
+    "TargetMuscle": "Groin",
+    "TargetInjury": [ "Groin Pull" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Hamstring Stretch",
     "Description": "A stretching exercise to relieve tension in the hamstring muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Hamstrings",
-    "TargetInjury": [ "Hamstring Strain" ]
-    },
-    {
+    "TargetInjury": [ "Hamstring Strain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Nordic Hamstring Curls",
     "Description": "A strengthening exercise for the hamstrings.",
     "Difficulty": "InterMediate",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Hamstrings",
-    "TargetInjury": [ "Hamstring Strain" ]
-    },
-    {
+    "TargetInjury": [ "Hamstring Strain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Quad Stretch",
     "Description": "A stretching exercise to relieve tension in the quadriceps muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Quads",
-    "TargetInjury": [ "Quadriceps Strain" ]
-    },
-    {
+    "TargetInjury": [ "Quadriceps Strain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Step-Ups (Low Impact)",
     "Description": "A low-impact exercise to strengthen the quadriceps.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Quads",
-    "TargetInjury": [ "Quadriceps Strain" ]
-    },
-    {
+    "TargetInjury": [ "Quadriceps Strain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Straight Leg Raises",
     "Description": "A rehabilitation exercise to strengthen the quadriceps without bending the knee.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Quads",
-    "TargetInjury": [ "Knee Ligament Injury (ACL, MCL, etc.)" ]
-    },
-    {
+    "TargetInjury": [ "Knee Ligament Injury (ACL, MCL, etc.)" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Wall Sit (Partial Range)",
     "Description": "A partial-range wall sit to strengthen the quadriceps while minimizing knee strain.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Quads",
-    "TargetInjury": [ "Knee Ligament Injury (ACL, MCL, etc.)" ]
-    },
-    {
+    "TargetInjury": [ "Knee Ligament Injury (ACL, MCL, etc.)" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Pelvic Tilts",
     "Description": "A gentle exercise to mobilize the lower back and pelvis.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Lower Back",
-    "TargetInjury": [ "Herniated Disc" ]
-    },
-    {
+    "TargetInjury": [ "Herniated Disc" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Core Activation Exercises",
     "Description": "A series of exercises to engage and strengthen the core muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Core",
-    "TargetInjury": [ "Herniated Disc" ]
-    },
-    {
+    "TargetInjury": [ "Herniated Disc" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Piriformis Stretch",
     "Description": "A stretch to relieve tension in the piriformis muscle and alleviate sciatic pain.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Glutes",
-    "TargetInjury": [ "Sciatica" ]
-    },
-    {
+    "TargetInjury": [ "Sciatica" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Ankle Circles",
     "Description": "A rehabilitation exercise to improve ankle mobility.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Bodyweight",
     "TargetMuscle": "Ankles",
-    "TargetInjury": [ "Ankle Sprain" ]
-    },
-    {
+    "TargetInjury": [ "Ankle Sprain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Resistance Band Dorsiflexion",
     "Description": "A rehabilitation exercise for ankle injuries using a resistance band.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Resistance Band",
     "TargetMuscle": "Ankles",
-    "TargetInjury": [ "Ankle Sprain" ]
-    },
-    {
+    "TargetInjury": [ "Ankle Sprain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Bicep Stretch",
     "Description": "A stretching exercise to relieve tension in the bicep muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Biceps",
-    "TargetInjury": [ "Bicep Tendonitis" ]
-    },
-    {
+    "TargetInjury": [ "Bicep Tendonitis" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Isometric Bicep Holds",
     "Description": "A static exercise to strengthen the biceps without movement.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Biceps",
-    "TargetInjury": [ "Bicep Tendonitis" ]
-    },
-    {
+    "TargetInjury": [ "Bicep Tendonitis" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Tricep Stretch",
     "Description": "A stretching exercise to relieve tension in the tricep muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Triceps",
-    "TargetInjury": [ "Tricep Tendonitis" ]
-    },
-    {
+    "TargetInjury": [ "Tricep Tendonitis" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Isometric Tricep Holds",
     "Description": "A static exercise to strengthen the triceps without movement.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Triceps",
-    "TargetInjury": [ "Tricep Tendonitis" ]
-    },
-    {
+    "TargetInjury": [ "Tricep Tendonitis" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Chest Stretch",
     "Description": "A stretching exercise to relieve tension in the chest muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Chest",
-    "TargetInjury": [ "Pectoral Muscle Strain" ]
-    },
-    {
+    "TargetInjury": [ "Pectoral Muscle Strain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Isometric Chest Holds",
     "Description": "A static exercise to strengthen the chest muscles without movement.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Dumbbell",
     "TargetMuscle": "Chest",
-    "TargetInjury": [ "Pectoral Muscle Strain" ]
-    },
-    {
+    "TargetInjury": [ "Pectoral Muscle Strain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  },
+  {
     "Name": "Lat Stretch",
     "Description": "A stretching exercise to relieve tension in the latissimus dorsi muscles.",
     "Difficulty": "Beginner",
     "TypeOfMachine": "Cable",
     "TargetMuscle": "Back",
-    "TargetInjury": [ "Latissimus Dorsi Strain" ]
-    }
-  ]
+    "TargetInjury": [ "Latissimus Dorsi Strain" ],
+    "YouTubeLink": "https://www.youtube.com/watch?v=12WJK62t7yQ "
+  }
+]

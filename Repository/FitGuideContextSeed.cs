@@ -155,6 +155,7 @@ namespace Repository
                             existingExercise.TypeOfMachine = exercise.TypeOfMachine ?? existingExercise.TypeOfMachine;
                             existingExercise.TargetInjury = exercise.TargetInjury ?? existingExercise.TargetInjury;
                             existingExercise.TargetMuscle = exercise.TargetMuscle ?? existingExercise.TargetMuscle;
+                            existingExercise.YoutubeLink = exercise.YoutubeLink ?? existingExercise.YoutubeLink;
                         }
                         else
                         {

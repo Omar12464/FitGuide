@@ -321,7 +321,7 @@ namespace FitGuide.Controllers
         //}
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("RemoveGoal")]
+        [HttpDelete("RemoveGoal")]
         public async Task<ActionResult> RemoveGoal()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -334,7 +334,14 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Goal Not Related To You" } });
             }
-            _repoGoal.DeleteAsync(usergoal);
+            try
+            {
+             _repoGoal.DeleteAsync(usergoal);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { $"Failed to delete the goal:: {ex.Message}" } });
+            }
 
             return Ok(new
             {
@@ -342,7 +349,7 @@ namespace FitGuide.Controllers
             });
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("GetGoal")]
+        [HttpGet("GetUserGoal")]
         public async Task<ActionResult> GetGoal()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -351,7 +358,7 @@ namespace FitGuide.Controllers
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
             var userGoal =await _repoGoal.GetFirstAsync(u=>u.IsActive&&u.UserId.Equals(user.Id));
-            var mapper= new UserGoalDTO
+            var UserGoal= new UserGoalDTO
             {   
                 name=userGoal.name,
                 targetMuscleMass=userGoal.targetMuscleMass,
@@ -362,7 +369,9 @@ namespace FitGuide.Controllers
                 description=userGoal.description
             };
             return Ok(new {
-               Description= $"Goal For{user.FistName}:", mapper });
+               Description= $"Goal For{user.FistName}:",
+                UserGoal
+            });
 
         }
 

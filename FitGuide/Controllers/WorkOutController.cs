@@ -36,7 +36,7 @@ namespace FitGuide.Controllers
             _repoWorkoutExercise = repoWorkoutExercise;
         }
 
-        [HttpGet("Show WorkOut Plans")]
+        [HttpGet("ShowAllWorkOutPlans")]
         public async Task<ActionResult> GetAllWorkOutPlans()
         {
             var workoutplans=await _fitGuideContext.WorkOutPlans.ToListAsync();

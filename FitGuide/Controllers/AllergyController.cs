@@ -18,12 +18,14 @@ namespace FitGuide.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IGeneric<Allergy> _repoAllergy;
         private readonly FitGuideContext _fitGuideContext;
+        private readonly IGeneric<UserAllergy> _repoUserAllergy;
 
-        public AllergyController(UserManager<User> userManager,IGeneric<Allergy> repoAllergy,FitGuideContext fitGuideContext)
+        public AllergyController(UserManager<User> userManager,IGeneric<Allergy> repoAllergy,FitGuideContext fitGuideContext,IGeneric<UserAllergy> repoUserAllergy)
         {
             _userManager = userManager;
             _repoAllergy = repoAllergy;
             _fitGuideContext = fitGuideContext;
+            _repoUserAllergy = repoUserAllergy;
         }
         [HttpGet("Show All Allergies")]
         public async Task<ActionResult> GetAllAllergies()
@@ -34,7 +36,7 @@ namespace FitGuide.Controllers
             return Ok(goalName);
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("GetAllergies")]
+        [HttpGet("GetAlUserlergies")]
         public async Task<ActionResult> GetAllergies()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -52,15 +54,20 @@ namespace FitGuide.Controllers
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
             var allergy = await _repoAllergy.GetFirstAsync(u => u.Id == id);
+            var existedAllergy=await _repoUserAllergy.GetFirstAsync(u => u.UserId == user.Id && u.AllergyId == id);
             if (allergy == null) {
-                return Ok($"User doesn;t have an allergy");
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "No Allergy available" } });
+            }
+            if(existedAllergy != null)
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Allergy already added" } });
             }
             var userallergy = new UserAllergy()
             {
                 UserId = user.Id,
                 AllergyId = allergy.Id,
             };
-            await _repoAllergy.AddAsync(allergy);
+            await _repoUserAllergy.AddAsync(userallergy);
             return Ok($"{allergy.Name} has been added");
 
 

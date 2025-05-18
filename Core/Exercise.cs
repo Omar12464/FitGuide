@@ -16,6 +16,7 @@ namespace Core
         public string? TypeOfMachine { get; set; }
         public string? TargetMuscle { get; set; }
         public List<string>? TargetInjury { get; set; }
+        public string? YoutubeLink { get; set; }
         //public byte[] GifBytes { get; set; }
         //public string GifPath { get; set; }
         [JsonIgnore]

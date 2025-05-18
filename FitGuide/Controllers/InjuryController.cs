@@ -28,7 +28,7 @@ namespace FitGuide.Controllers
             _repoInjury = repoInjury;
             _repoUserInjury = repoUserInjury;
         }
-        [HttpGet("GetInjuries")]
+        [HttpGet("GetAllInjuries")]
         public async Task<ActionResult> GetInjuries()
         {
             var goals = await _repoInjury.GetAllAsync();
@@ -44,35 +44,34 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
             }
+
             var injuries = await _repoInjury.GetAllAsync();
             var addedinjury = new List<string>();
             if (userInjury == null) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Injury is not supported or available" } }); }
-            var exisitinginjury = injuries.FirstOrDefault(i => i.Id.Equals(userInjury.Id));
+            var exisitinginjury = await _repoUserInjury.GetFirstAsync(u => u.UserId.Equals(user.Id) && u.injuryId == userInjury.Id);
             if (exisitinginjury != null)
             {
-                var userInjuryExist = await _fitGuideContext.userInjuries.AnyAsync(ui => ui.UserId == user.Id && ui.injuryId.Equals(exisitinginjury.Id));
-                if (!userInjuryExist)
-                {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Injury already added" } });
+            }
                     var newuser = new UserInjury
                     {
                         UserId = user.Id,
-                        injuryId = userInjury.Id
+                        injuryId = userInjury.Id,
                     };
                     await _repoUserInjury.AddAsync(newuser);
                     addedinjury.Add(newuser.injury.Name);
-                    //var mapper = _mapper.Map<InjuryUserDTO>(exisitinginjury);
-                    //mapper.UserId = user.Id;
-                    //var injuryuser = _mapper.Map<UserInjury>(mapper);
+            //var mapper = _mapper.Map<InjuryUserDTO>(exisitinginjury);
+            //mapper.UserId = user.Id;
+            //var injuryuser = _mapper.Map<UserInjury>(mapper);
 
-                }
+            return Ok($"{addedinjury} has been added");
 
-            }
-            return Ok(addedinjury);
+
 
 
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("GetInjuries")]
+        [HttpGet("GetUserInjuries")]
         public  async Task<ActionResult> GetAllInjuries()
         {
             var user = await _userManager.GetUserAsync(User);

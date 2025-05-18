@@ -61,10 +61,10 @@ namespace FitGuide.Controllers
             bool exist = await _userMetrics.CheckMetrics(Metrics.UserId);
             if (exist is true) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "This Metrics exist" } }); }
             await _repo.AddAsync(Metrics);
-            return Ok(Metrics);
+            return Ok($"{user.FistName} metrics has been added successfully");
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("UpdateMetrics")]
+        [HttpPut("UpdateMetrics")]
         public async Task<ActionResult> UpdateMetrics(UpdateUserMetricsDTO userMetrics)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -95,11 +95,11 @@ namespace FitGuide.Controllers
             {
                 return StatusCode(500, new ApiExceptionResponse(500, "An error occurred while updating metrics.", ex.Message));
             }
-            
-            return Ok(existedmetrics);
+
+            return Ok($"{user.FistName} metrics has been updated successfully");
         }
         [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("GetAllMetrices")]
+        [HttpGet("GetAllUserMetrices")]
         public async Task<ActionResult<UserMetricsDTO>> GetMetrcies()
         {
             var user=await _userManager.GetUserAsync(User);
