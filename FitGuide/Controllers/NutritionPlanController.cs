@@ -32,7 +32,7 @@ namespace FitGuide.Controllers
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("GenerateNutritionPlan")]
-        public async Task<ActionResult> GenerateNutriotionPlan(NutritionPlanInputDTO nutritionPlanInputDTO)
+        public async Task<ActionResult> GenerateNutriotionPlan()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -46,30 +46,56 @@ namespace FitGuide.Controllers
             }
             var userMetrics = await _repoMetrics.GetAllAsync();
             var userMetric = userMetrics.OrderByDescending(um => um.CreatedAt).FirstOrDefault(um => um.UserId == user.Id);
+            if (userMetric == null)
+            {
+                return BadRequest(new ApiValidationErrorResponse { Errors = new[] {"User has no metrics" } });
+
+            }
             var bmr = _nutritionPlanServices.CalculateBmr(user.Gender, userMetric.Weight, userMetric.Height, user.Age);
-            var tdee = bmr * userMetric.GymFrequency;
+            double tdee = 0;
+            var gymFreq = userMetric.GymFrequency;
+            if (gymFreq == GymFrequency.Everyday)
+            {
+                tdee = bmr * 1.725;
+            }
+            else if (gymFreq == GymFrequency.ThreeToFour)
+            {
+                tdee = bmr * 1.375;
+            }
+            else if (gymFreq == GymFrequency.FiveToSix)
+            {
+                tdee = bmr * 1.55;
+            }
+            else if (gymFreq == GymFrequency.OneToTwo)
+            {
+                tdee = bmr * 1.2;
+            }
+            else
+            {
+                tdee = bmr * 1.2;
+            }
             var userGoal = await _fitGuideContext.userGoals.OrderByDescending(ug => ug.CreatedAt).FirstOrDefaultAsync(ug => ug.UserId == user.Id && ug.IsActive);
+            if (userGoal == null)
+            {
+                return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "User has no active goals" } });
+            }
             var TotalDailyCalories = _nutritionPlanServices.AdjustCaloriesForGoal(userGoal.name, tdee);
             var Macros = _nutritionPlanServices.CalculateMacros(TotalDailyCalories, userGoal.name);
             var nutritionPlanEntity = new NutritionPlan
             {
                 Name = $" Nutrition Plan has been generated for {user.FistName}",
                 UserId = user.Id,
+                CaloriestTarget = Macros.calories,
                 ProteinTarget = Macros.protein,
                 CarbsTarget = Macros.carbs,
                 FatTarget = Macros.fats,
                 CreatedAt = DateTime.UtcNow,
             };
-            try
-            {
-                _repoNutrition.AddAsync(nutritionPlanEntity);
-                return Ok(new { Message = "Nutrition plan generated successfully." });
-            }
-            catch (Exception ex)
-            {
 
-                return (BadRequest(new ApiValidationErrorResponse { Errors = new[] { ex.Message } }));
-            }
+               await _repoNutrition.AddAsync(nutritionPlanEntity);
+                return Ok(new { Message = "Nutrition plan generated successfully." });
+            
+
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("UpdateNutritionPlan")]
@@ -98,7 +124,29 @@ namespace FitGuide.Controllers
 
             // Calculate BMR, TDEE, and total daily calories
             var bmr = _nutritionPlanServices.CalculateBmr(user.Gender, userMetric.Weight, userMetric.Height, user.Age);
-            var tdee = bmr * userMetric.GymFrequency;
+            var gymFrequency = userMetric.GymFrequency;
+            double tdee = 0;
+            var gymFreq =userMetric.GymFrequency;
+            if (gymFreq == GymFrequency.Everyday)
+            {
+                tdee = bmr * 1.725;
+            }
+            else if (gymFreq == GymFrequency.ThreeToFour)
+            {
+                tdee = bmr * 1.375;
+            }
+            else if (gymFreq == GymFrequency.FiveToSix)
+            {
+                tdee = bmr * 1.55;
+            }
+            else if (gymFreq == GymFrequency.OneToTwo)
+            {
+                tdee = bmr * 1.2;
+            }
+            else
+            {
+                tdee = bmr * 1.2;
+            }
             var totalDailyCalories = _nutritionPlanServices.AdjustCaloriesForGoal(userGoal.name, tdee);
 
             // Calculate macros
@@ -110,6 +158,7 @@ namespace FitGuide.Controllers
 
             if (existingNutritionPlan != null)
             {
+                existingNutritionPlan.CaloriestTarget = macros.calories;
                 existingNutritionPlan.ProteinTarget = macros.protein;
                 existingNutritionPlan.CarbsTarget = macros.carbs;
                 existingNutritionPlan.FatTarget = macros.fats;
@@ -141,6 +190,7 @@ namespace FitGuide.Controllers
             return Ok(new
             {
                 Name = nutritionPlan.Name,
+                TotalCalories = nutritionPlan.CaloriestTarget,
                 ProteinTarget = nutritionPlan.ProteinTarget,
                 CarbsTarget = nutritionPlan.CarbsTarget,
                 FatTarget = nutritionPlan.FatTarget,

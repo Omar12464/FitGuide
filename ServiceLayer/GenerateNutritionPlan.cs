@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace ServiceLayer
 {
     public class GenerateNutritionPlan : INutritionPlan
     {
+
         public double AdjustCaloriesForGoal(string goal, double tdee)
         {
             double adjustedCalories = tdee;
@@ -58,12 +60,12 @@ namespace ServiceLayer
             }else return 0;
         }
 
-        public double CalculateBmr(string Gender, double weight, double height, int age)
-        {
-            throw new NotImplementedException();
-        }
+        //public double CalculateBmr(string Gender, double weight, double height, int age)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public (double protein, double carbs, double fats) CalculateMacros(double calories, string goal)
+        public (double protein, double carbs, double fats, double calories) CalculateMacros(double calories, string goal)
         {
             double protein = 0;  double carbs = 0;  double fats = 0;
             switch (goal.ToLowerInvariant())
@@ -105,7 +107,11 @@ namespace ServiceLayer
                     fats = calories * 0.3 / 9;
                     break;
             }
-            return (protein, carbs, fats);
+            protein=Math.Round(protein, 2);
+            carbs = Math.Round(carbs, 2);
+            fats = Math.Round(fats, 2);
+
+            return (protein, carbs, fats,calories);
         }
 
         //public Task<ActionResult> CreateNutritionPlanAsync(string userId, string goal)

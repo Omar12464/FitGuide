@@ -39,10 +39,10 @@ namespace FitGuide.Controllers
         [HttpGet("ShowAllWorkOutPlans")]
         public async Task<ActionResult> GetAllWorkOutPlans()
         {
-            var workoutplans=await _fitGuideContext.WorkOutPlans.ToListAsync();
+            var workoutplans = await _fitGuideContext.WorkOutPlans.ToListAsync();
             return Ok(workoutplans);
         }
-        
+
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("GenerateWorkOut")]
@@ -79,7 +79,7 @@ namespace FitGuide.Controllers
                 return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "User UnAuthorized" } });
             }
             var workoutexercsie = await _repoWorkoutExercise.GetAllAsync();
-            if(!workoutexercsie .Any() )
+            if (!workoutexercsie.Any())
             {
                 return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "No Workout Plans already generated" } });
             }
@@ -115,7 +115,7 @@ namespace FitGuide.Controllers
             }
             // Fetch the raw data from the database
             var workouts = await _fitGuideContext.workOutExercises
-                .Where(we => we.UserId == user.Id&&we.IsActive== true)
+                .Where(we => we.UserId == user.Id && we.IsActive == true)
                 .Include(we => we.workOutPlan)
                 .OrderByDescending(we => we.workOutPlan)
                 .Include(we => we.exercise)
@@ -128,7 +128,7 @@ namespace FitGuide.Controllers
 
             // Group exercises by workout plan
             var groupedWorkouts = workouts
-                .Where(we=>we.IsActive==true)
+                .Where(we => we.IsActive == true)
                 .GroupBy(we => we.workOutPlan.Id)// Group by workout plan ID
                 .Select(group => new
                 {
@@ -138,7 +138,8 @@ namespace FitGuide.Controllers
                         Name = group.First().workOutPlan.Name,
                         Description = group.First().workOutPlan.Description,
                         NumberOfDays = group.First().workOutPlan.NumberOfDays,
-                        DifficultyLevel = group.First().workOutPlan.DifficultyLevel.ToString()
+                        DifficultyLevel = group.First().workOutPlan.DifficultyLevel.ToString(),
+                        Alert= "If You tried to carry weight higher than the weight that we recommend be aware that it may cause injury",
                     },
                     Exercises = group.Select(we => new
                     {
@@ -150,12 +151,36 @@ namespace FitGuide.Controllers
                         TargetMuscle = we.exercise.TargetMuscle,
                         TargetInjury = we.exercise.TargetInjury,
                         NumberOfReps = we.NumberOfReps,
-                        NumberOfSets = we.NumberOfSets
+                        NumberOfSets = we.NumberOfSets,
+                        MaximumWeight = we.Weight,
                     }).ToList()
                 })
                 .ToList();
 
             return Ok(groupedWorkouts);
+        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("WatchTutorial")]
+        public async Task<ActionResult> GetExerciseYoutuvbelinkvideo(int id)
+        {
+            var user =await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized(new ApiValidationErrorResponse { Errors = new[] { "User UnAuthorized" } });
+            }
+            var exercise = _fitGuideContext.Exercise.FirstOrDefault(e => e.Id == id);
+            if (exercise == null)
+            {
+                return NotFound(new ApiValidationErrorResponse { Errors = new[] { "Exercise not found" } });
+            }
+            if (string.IsNullOrEmpty(exercise.YoutubeLink))
+            {
+                return NotFound(new ApiValidationErrorResponse { Errors = new[] { "Youtube link not found for this exercise" } });
+            }
+            var youtubeLink = exercise.YoutubeLink;
+            return Ok(youtubeLink);
+
+
         }
     }
 }

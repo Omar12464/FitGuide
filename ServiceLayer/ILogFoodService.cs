@@ -9,7 +9,7 @@ namespace ServiceLayer
 {
     public interface ILogFoodService
     {
-        public Task LogFood(string userId,int foodItemId,double quantity);
+        public Task<object> LogFood(string userId,int foodItemId,double quantity);
         public bool IsFoodSafeForUser(FoodItem food, List<string> userAllergies);
 
     

@@ -48,6 +48,8 @@ namespace Repository
             {
                 e.Property(u => u.weightCategory).HasConversion<string>();
                 e.Property(u => u.fitnessLevel).HasConversion<string>();
+                e.Property(u => u.GymFrequency).HasConversion<string>();
+
             });
             modelBuilder.Entity<Exercise>(entity =>
             {

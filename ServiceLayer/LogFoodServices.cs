@@ -18,7 +18,7 @@ namespace ServiceLayer
         {
             _fitGuideContext = fitGuideContext;
         }
-        public async Task LogFood(string userId, int foodItemId, double quantity)
+        public async Task<object> LogFood(string userId, int foodItemId, double quantity)
         {
             var food = await _fitGuideContext.Food.FindAsync(foodItemId);
             if (food == null)
@@ -66,6 +66,7 @@ namespace ServiceLayer
                 _fitGuideContext.dailyIntakes.Add(dailyIntake);
                 await _fitGuideContext.SaveChangesAsync();
 
+
             }
             else
             {
@@ -73,11 +74,23 @@ namespace ServiceLayer
                 dailyIntake.TotalProtein += protein;
                 dailyIntake.TotalCarbs += carbs;
                 dailyIntake.TotalFat += fat;
+                
                 _fitGuideContext.dailyIntakes.Update(dailyIntake);
                 await _fitGuideContext.SaveChangesAsync();
             }
             _fitGuideContext.LogFood.Add(log);
             await _fitGuideContext.SaveChangesAsync();
+
+            return new
+            {
+                Message = "Food logged successfully.",
+                FoodName = food.Name,
+                Quantity = quantity,
+                Calories = calories,
+                Protein = protein,
+                Carbs = carbs,
+                Fat = fat
+            };
         }
 
         public bool IsFoodSafeForUser(FoodItem food, List<string> userAllergies)

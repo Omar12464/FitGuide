@@ -30,6 +30,19 @@ namespace Core
         [System.Runtime.Serialization.EnumMember(Value = "Professional")]
         Professional
     }
+
+    public enum GymFrequency 
+    {
+        [EnumMember(Value = "1-2 times a week")]
+        OneToTwo,
+        [EnumMember(Value = "3-4 times a week")]
+        ThreeToFour,
+        [EnumMember(Value = "5-6 times a week")]
+        FiveToSix,
+        [EnumMember(Value = "Everyday")]
+        Everyday
+    }
+
     public class UserMetrics : ModelBase
     {
         public string UserId { get; set; }
@@ -39,7 +52,7 @@ namespace Core
         public float? Fat { get; set; }
         public float? MuscleMass { get; set; }
         public float? WaterMass { get; set; }
-        public double GymFrequency { get; set; }
+        public GymFrequency GymFrequency { get; set; }
         public WeightCategory weightCategory { get; set; }
         public FitnessLevel? fitnessLevel { get; set; }
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;

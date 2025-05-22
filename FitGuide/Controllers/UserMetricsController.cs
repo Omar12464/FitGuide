@@ -58,8 +58,8 @@ namespace FitGuide.Controllers
             Metrics.BMI = bmi;
             Metrics.CreatedAt = DateTime.UtcNow;
             Metrics.weightCategory = weightcat;
-            bool exist = await _userMetrics.CheckMetrics(Metrics.UserId);
-            if (exist is true) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "This Metrics exist" } }); }
+            //bool exist = await _userMetrics.CheckMetrics(Metrics.UserId);
+            //if (exist is true) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "This Metrics exist" } }); }
             await _repo.AddAsync(Metrics);
             return Ok($"{user.FistName} metrics has been added successfully");
         }

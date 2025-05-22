@@ -36,12 +36,27 @@ namespace FitGuide.Controllers
             return Ok(goalName);
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("GetAlUserlergies")]
+        [HttpGet("GetAlllergies")]
         public async Task<ActionResult> GetAllergies()
         {
             var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
+            }
             var allergies = await _fitGuideContext.userAllergies.Where(u=>u.UserId.Equals(user.Id)).Include(u=>u.allergy).ToListAsync();
-            return Ok(allergies);
+            var userAllergies=allergies.GroupBy(u=>u.UserId)
+                .Select(u=>new
+                {
+                    Description=$"Allergies for {user.FistName}",
+                    Allergies = allergies.Select(u => u.allergy.Name).ToList()
+                }).ToList();
+            if (userAllergies == null||userAllergies.Count==0)
+            {
+                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "No Allergies available" } });
+            }
+
+                return Ok(userAllergies);
         }
 
         [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
@@ -72,18 +87,18 @@ namespace FitGuide.Controllers
 
 
         }
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("ViewMyAllergies")]
-        public async Task<ActionResult> ViewMyAllergies()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
-            }
-            var userallergies =await _repoAllergy.GetAllAsync();
-            var userall = userallergies.Where(u => user.Id.Equals(u.Id)).ToList();
-            return Ok(userall);
-        }
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[HttpGet("ViewMyAllergies")]
+        //public async Task<ActionResult> ViewMyAllergies()
+        //{
+        //    var user = await _userManager.GetUserAsync(User);
+        //    if (user == null)
+        //    {
+        //        return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
+        //    }
+        //    var userallergies =await _repoAllergy.GetAllAsync();
+        //    var userall = userallergies.Where(u => user.Id.Equals(u.Id)).ToList();
+        //    return Ok(userall);
+        //}
     }
 }

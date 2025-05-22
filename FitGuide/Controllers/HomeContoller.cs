@@ -231,6 +231,33 @@ namespace FitGuide.Controllers
             else
                 return Ok(userMetric);
         }
+
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("getAllFood")]
+        public async Task<ActionResult> GetAllFood()
+        {
+            //var user = await _userManager.GetUserAsync(User);
+            //if (user == null)
+            //{
+            //    return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "User Unauthorized" } });
+            //}
+            var food = await _fitGuideContext.Food.ToListAsync();
+            if (!food.Any())
+            {
+                return NotFound(new { message = "No food data found." });
+            }
+            var result = food.Select(f => new
+            {
+                Name = f.Name,
+                CaloriesPerServing = f.CaloriesPerServing
+            }).ToList();
+
+            return Ok(result);
+
+        }
+
+
+
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("AddFood")]
         public async Task<ActionResult> AddFood(string FoodName, double Quantity)
@@ -245,16 +272,13 @@ namespace FitGuide.Controllers
             {
                 return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "Food not found" } });
             }
-            var foodLog =  _logFoodService.LogFood(user.Id, food.Id,Quantity);
-            if (foodLog == null)
-            {
-                return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "Failed to log food" } });
-            }
-            return Ok(new { Message = "Food logged successfully." });
+            var foodLog = await _logFoodService.LogFood(user.Id, food.Id,Quantity);
+
+            return Ok(food);
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("FoodDiary")]
-        public async Task<ActionResult> FoodDiary(DateTime date)
+        public async Task<ActionResult> FoodDiary(DateOnly date)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -262,7 +286,7 @@ namespace FitGuide.Controllers
                 return BadRequest(new ApiValidationErrorResponse { Errors = new[] { "User Unauthorized" } });
             }
             var logs = await _fitGuideContext.LogFood
-                .Where(l => l.UserId == user.Id && l.LoggedAt.Date == DateTime.UtcNow.Date)
+                .Where(l => l.UserId == user.Id && DateOnly.FromDateTime(l.LoggedAt) == date)
                 .Include(l => l.foodItem)
                 .ToListAsync();
 
@@ -281,7 +305,7 @@ namespace FitGuide.Controllers
                 Protein = (log.foodItem.ProteinPerServing / 100) * log.Quantity,
                 Carbs = (log.foodItem.CarbsPerServing / 100) * log.Quantity,
                 Fat = (log.foodItem.FatPerServing / 100) * log.Quantity,
-                LoggedAt = log.LoggedAt
+                LoggedAt = log.LoggedAt.Day.ToString("dd/MM/yyyy")
             }).ToList();
             return Ok(result);
 
@@ -308,13 +332,30 @@ namespace FitGuide.Controllers
 
             var FoodIntake=await _genericDailyIntake.GetAllAsync();
 
-            var foodIntake = FoodIntake.Where(f => f.UserId == user.Id&&f.Date==DateTime.UtcNow.Date)
+            var foodIntake = FoodIntake.Where(f => f.UserId == user.Id&&f.Date.Date==DateTime.UtcNow.Date)
                 .FirstOrDefault();
             var caloriesIntake = foodIntake?.TotalCalories ?? 0;
             var proteinIntake = foodIntake?.TotalProtein ?? 0;
             var carbsIntake = foodIntake?.TotalCarbs ?? 0;
             var fatIntake = foodIntake?.TotalFat ?? 0;
             var remainingCalories = TotalCalories - caloriesIntake;
+            if (remainingCalories > 0)
+            {
+                return Ok(new
+                {
+                    Alert= "You are above the daily target of your plan",
+                    TotalCalories = TotalCalories,
+                    FoofIntake = caloriesIntake,
+                    remainingCalories = remainingCalories,
+                    TotalProtein = TotalProtein,
+                    FoodIntakeProtein = proteinIntake,
+                    TotalCarbs = TotalCarbs,
+                    FoodIntakeCarbs = carbsIntake,
+                    TotalFat = TotalFat,
+                    FoodIntakeFats = fatIntake,
+
+                });
+            }
 
             return Ok(new
             {

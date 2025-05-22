@@ -64,7 +64,7 @@ namespace FitGuide.Controllers
             //mapper.UserId = user.Id;
             //var injuryuser = _mapper.Map<UserInjury>(mapper);
 
-            return Ok($"{addedinjury} has been added");
+            return Ok($"{newuser.injury.Name} has been added");
 
 
 
@@ -83,8 +83,8 @@ namespace FitGuide.Controllers
             if (!injuries.Any()) { return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { $"No Injuries related to {user.FistName}" } }); }
             var userInjuries = injuries.GroupBy(u => u.UserId).Select(u => new
             {
-                username=user.FullName,
-                injuries=injuries.SelectMany(u=>u.injury.Name).ToList(),
+                Description = $"Injuries for {user.FistName}",
+                injuries = injuries.Select(u=>u.injury.Name),
             }).ToList();
             return Ok(userInjuries);
         }

@@ -21,5 +21,6 @@ namespace Core
         public string UserId { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; } = false;
+        public double? Weight { get; set; }
     }
 }

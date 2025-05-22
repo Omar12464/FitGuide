@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(FitGuideContext))]
-    partial class FitGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20250521231815_addweigh")]
+    partial class addweigh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -449,9 +452,8 @@ namespace Repository.Migrations
                     b.Property<float?>("Fat")
                         .HasColumnType("real");
 
-                    b.Property<string>("GymFrequency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("GymFrequency")
+                        .HasColumnType("float");
 
                     b.Property<float>("Height")
                         .HasColumnType("real");

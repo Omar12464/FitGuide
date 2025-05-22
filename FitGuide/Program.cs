@@ -81,7 +81,10 @@ namespace FitGuide
             builder.Services.AddScoped(typeof(IGenrateWorkOutService), typeof(GenerateWorkOutPlansService));
             builder.Services.AddScoped(typeof(IWeightCategory), typeof(WeightCategoryRanges));
             builder.Services.AddScoped(typeof(IWeightTarget), typeof(WeightCategoryTargets));
+            builder.Services.AddScoped(typeof(INutritionPlan), typeof(GenerateNutritionPlan));
+
             builder.Services.AddScoped(typeof(ILogFoodService), typeof(LogFoodServices));
+            
             builder.Services.AddAutoMapper(typeof(Mapping));
 
 
@@ -170,7 +173,7 @@ namespace FitGuide
                 //    options.SlidingExpiration = true;
                 //    options.LoginPath= "/controller/Login";
                 //});
-
+                app.UseHttpsRedirection();
                 app.MapControllers();
                 Console.WriteLine("Application started...");
                 app.Run();

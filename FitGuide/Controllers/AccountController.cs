@@ -105,6 +105,8 @@ namespace FitGuide.Controllers
                         FullName=user.FullName,
                         Email = logIn.EmailAddress,
                         Password = logIn.Password,
+                        PhoneNumber=user.PhoneNumber,
+                        Country=user.Country,
                         Token = await _authService.CreateTokenAsync(user,_userManager)
                     
                     });

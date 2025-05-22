@@ -10,10 +10,13 @@ namespace FitGuide.HelperMethods
         public Mapping()
         {
             CreateMap<UserMetrics, UserMetricsDTO>().ReverseMap()
-                .ForMember(um=>um.BMI,opt=>opt.Ignore()).ForMember(um => um.CreatedAt, opt => opt.Ignore())
-                .ForMember(um=>um.fitnessLevel,opt=>opt.MapFrom(um=>um.fitnessLevel.ToString()));
+                .ForMember(um => um.BMI, opt => opt.Ignore()).ForMember(um => um.CreatedAt, opt => opt.Ignore())
+                .ForMember(um => um.fitnessLevel, opt => opt.MapFrom(um => um.fitnessLevel.ToString()))
+                .ForMember(um => um.fitnessLevel, opt => opt.MapFrom(um => um.fitnessLevel.ToString()));
+;
 
             CreateMap<UpdateUserMetricsDTO, UserMetrics>().ReverseMap()
+                .ForMember(um => um.fitnessLevel, opt => opt.MapFrom(um => um.fitnessLevel.ToString()))
                 .ForAllMembers(opt => opt.Condition((src, dest, srcmember) => src != null));
             CreateMap<UserGoalDTO, UserGoal>().ReverseMap();
             CreateMap<InjuryUserDTO, UserInjury>().ReverseMap();
