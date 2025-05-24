@@ -269,56 +269,7 @@ namespace FitGuide.Controllers
                 description = userG.description
             });
         }
-        //[HttpPost("UpdateGoal")]
-        //public async Task<ActionResult> UpdateGoal(string GoalName)
-        //{
-        //    var user = await _userManager.GetUserAsync(User);
 
-
-        //    if (user == null)
-        //    {
-        //        return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "User UnAuthorized" } });
-        //    }
-        //    //var goals = await _repoGoalTemplate.GetFirstAsync(u=>u.name.Equals(userGoal.name));
-        //    //var usermetrics = await _repo.GetFirstAsync(u => u.UserId.Equals(user.Id));
-        //    //var userHeight = usermetrics.Height;
-        //    //var IsGoalAvailable = await _repoGoal.GetFirstAsync(u => u.UserId.Equals(user.Id));
-
-        //    //if (IsGoalAvailable == null)
-        //    //{
-        //    //    return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "The Goal isnot found" } });
-        //    //}
-        //    //if (userGoal.TargetMuscleMass.HasValue)
-        //    //{
-        //    //    IsGoalAvailable.targetMuscleMass = userGoal.TargetMuscleMass;
-        //    //}
-        //    //if (userGoal.TargetWeight != 0)
-        //    //{
-        //    //    IsGoalAvailable.targetWeight = userGoal.TargetWeight;
-        //    //}
-        //    //if (userGoal.TargetBMI.HasValue)
-        //    //{
-        //    //    IsGoalAvailable.targetBMI = userGoal.TargetBMI;
-        //    //}
-
-        //    var NewGoal = SelectGoal(userGoal.name);
-
-        //    return Ok(new UserGoalDTO
-        //    {
-        //        targetBMI = NewGoal.,
-        //        targetWeight = IsGoalAvailable.targetWeight,
-        //        targetMuscleMass = IsGoalAvailable.targetMuscleMass,
-        //        name = IsGoalAvailable.name,
-        //        description = IsGoalAvailable.description
-        //    });
-        //    //var mapper = _mapper.Map<UserGoalDTO,UserGoal>(userGoal);
-        //    //await _repoGoal.AddAsync(mapper);
-        //    //return Ok(new
-        //    //{
-        //    //    mapper,
-        //    //    Message ="Goal added succuessfully but its not saved to your goal"
-        //    //});
-        //}
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete("RemoveGoal")]

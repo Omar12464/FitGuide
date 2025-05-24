@@ -22,5 +22,6 @@ namespace Core
         public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; } = false;
         public double? Weight { get; set; }
+        public ExerciseLog exerciseLog { get; set; }
     }
 }

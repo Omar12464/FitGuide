@@ -16,7 +16,7 @@ namespace Core
         public List<string>? ContraindicatedExercises { get; set; }
         public List<string>? SuitableExercises { get; set; }
         public List<string>? SuitableEquipment { get; set; }
-        public ICollection<UserInjury> UserInjuries { get; set; }
+        public ICollection<UserInjury> UserInjuries { get; set; } =new HashSet<UserInjury>();
 
 
     }

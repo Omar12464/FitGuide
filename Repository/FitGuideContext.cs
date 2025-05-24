@@ -26,6 +26,16 @@ namespace Repository
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ExerciseLog>().HasOne(e=>e.workOutExercises).WithOne(w => w.exerciseLog).HasForeignKey<ExerciseLog>(e => e.WorkOutExerciseId);
+            modelBuilder.Entity<ExerciseLog>().HasMany(e=>e.exercise_Feedback).WithOne(e=>e.exerciseLog).HasForeignKey(e=>e.ExerciseLogId);
+            modelBuilder.Entity<ExerciseLog>(entity =>
+            {
+                entity.HasKey
+                (el => el.Id);
+                entity.Property(el => el.LoggedAt).HasColumnType("datetime");
+
+            });
+       
             modelBuilder.Entity<FoodItem>(entity =>
             {
                 entity.HasKey(f => f.Id);
@@ -125,6 +135,7 @@ namespace Repository
             modelBuilder.Entity<WorkOutExercises>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
             });
             modelBuilder.Entity<UserAllergy>(entity =>
             {
@@ -155,7 +166,8 @@ namespace Repository
         public DbSet<UserAllergy> userAllergies { get; set; }
         public DbSet<NutritionPlan> nutritionPlans { get; set; }
         public DbSet<WorkOutExercises> workOutExercises { get; set; }
-
+        public DbSet<ExerciseLog> exerciseLogs { get; set; }
+        public DbSet<Exercise_Feedback> exercise_Feedbacks { get; set; }
 
 
 

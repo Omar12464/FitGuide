@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(FitGuideContext))]
-    partial class FitGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20250524131651_ds")]
+    partial class ds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,12 +122,6 @@ namespace Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Exercise_FeedbackId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LoggedAt")
-                        .HasColumnType("datetime");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -136,10 +133,12 @@ namespace Repository.Migrations
                     b.Property<int>("WorkOutExerciseId")
                         .HasColumnType("int");
 
+                    b.Property<int>("workOutExercisesId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkOutExerciseId")
-                        .IsUnique();
+                    b.HasIndex("workOutExercisesId");
 
                     b.ToTable("exerciseLogs");
                 });
@@ -156,12 +155,7 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ExerciseLogId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ExerciseLogId");
 
                     b.ToTable("exercise_Feedbacks");
                 });
@@ -613,23 +607,12 @@ namespace Repository.Migrations
             modelBuilder.Entity("Core.ExerciseLog", b =>
                 {
                     b.HasOne("Core.WorkOutExercises", "workOutExercises")
-                        .WithOne("exerciseLog")
-                        .HasForeignKey("Core.ExerciseLog", "WorkOutExerciseId")
+                        .WithMany()
+                        .HasForeignKey("workOutExercisesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("workOutExercises");
-                });
-
-            modelBuilder.Entity("Core.Exercise_Feedback", b =>
-                {
-                    b.HasOne("Core.ExerciseLog", "exerciseLog")
-                        .WithMany("exercise_Feedback")
-                        .HasForeignKey("ExerciseLogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("exerciseLog");
                 });
 
             modelBuilder.Entity("Core.Identity.Entities.UserAllergy", b =>
@@ -694,11 +677,6 @@ namespace Repository.Migrations
                     b.Navigation("workOutExercises");
                 });
 
-            modelBuilder.Entity("Core.ExerciseLog", b =>
-                {
-                    b.Navigation("exercise_Feedback");
-                });
-
             modelBuilder.Entity("Core.FoodItem", b =>
                 {
                     b.Navigation("logFoods");
@@ -707,12 +685,6 @@ namespace Repository.Migrations
             modelBuilder.Entity("Core.Injury", b =>
                 {
                     b.Navigation("UserInjuries");
-                });
-
-            modelBuilder.Entity("Core.WorkOutExercises", b =>
-                {
-                    b.Navigation("exerciseLog")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.WorkOutPlan", b =>

@@ -99,7 +99,7 @@ namespace ServiceLayer
            
 
 
-            switch (PlanType)
+            switch (normalizedInput)
             {
                 case "pushpulllegs":
                     dailyExercises["Push Day"] = GetSafeExercisesForCategory(filteredExercises, new[] { "Chest", "Shoulders", "Triceps" }, injuryAffectedParts);
