@@ -86,10 +86,10 @@ namespace ServiceLayer
                 Message = "Food logged successfully.",
                 FoodName = food.Name,
                 Quantity = quantity,
-                Calories = calories,
-                Protein = protein,
-                Carbs = carbs,
-                Fat = fat
+                Calories = Math.Round(calories,2),
+                Protein = Math.Round(protein, 2),
+                Carbs = Math.Round(carbs, 2),
+                Fat = Math.Round(fat, 2)
             };
         }
 

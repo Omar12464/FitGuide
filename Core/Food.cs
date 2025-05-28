@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Core
@@ -51,6 +52,7 @@ namespace Core
         // Additional Dietary Preferences
         public bool IsLowFODMAP { get; set; } // Low FODMAP diet compatibility
         public bool IsKosher { get; set; } // Kosher-certified
+        [JsonIgnore]
         public ICollection<LogFood> logFoods { get; set; }=new HashSet<LogFood>(); // Collection of food logs associated with this food item
     }
     //public string? BarCode { get; set; }

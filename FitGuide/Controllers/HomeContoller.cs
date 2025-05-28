@@ -274,7 +274,7 @@ namespace FitGuide.Controllers
             }
             var foodLog = await _logFoodService.LogFood(user.Id, food.Id,Quantity);
 
-            return Ok(food);
+            return Ok(foodLog);
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("FoodDiary")]
