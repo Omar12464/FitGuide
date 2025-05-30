@@ -167,6 +167,25 @@ namespace ServiceLayer
                         throw new InvalidOperationException($"Failed to generate exercises for '{day}' in '{PlanType}' plan.");
                     }
             }
+            var loweredNames = new[] { "pushup", "tricep pushdown", "squat", "bicep curl" };
+
+            var specificExercises = await _fitGuideContext.Exercise
+                .Where(e => loweredNames.Contains(e.Name.ToLower()))
+                .ToListAsync();
+
+            foreach (var specific in specificExercises)
+            {
+                string targetDay = dailyExercises.FirstOrDefault(kvp =>
+                    kvp.Value.Any(ex => ex.TargetMuscle != null && specific.TargetMuscle != null &&
+                        ex.TargetMuscle.Equals(specific.TargetMuscle, StringComparison.OrdinalIgnoreCase)))
+                    .Key;
+
+                if (!string.IsNullOrEmpty(targetDay) &&
+                    !dailyExercises[targetDay].Any(e => e.Id == specific.Id))
+                {
+                    dailyExercises[targetDay].Add(specific);
+                }
+            }
             foreach (var (day, exercises) in dailyExercises)
             {
                 foreach (var exercise in exercises)
@@ -174,7 +193,8 @@ namespace ServiceLayer
                     bool usesMachine = exercise.TypeOfMachine != null &&
                   (exercise.TypeOfMachine.Equals("Dumbbell", StringComparison.OrdinalIgnoreCase) ||
                    exercise.TypeOfMachine.Equals("Cable", StringComparison.OrdinalIgnoreCase) ||
-                   exercise.TypeOfMachine.Equals("Machine", StringComparison.OrdinalIgnoreCase));
+                   exercise.TypeOfMachine.Equals("Machine", StringComparison.OrdinalIgnoreCase))||
+                   exercise.TypeOfMachine.Equals("Bodyweight", StringComparison.OrdinalIgnoreCase);
                     //int numberOfDays=3;
                     //if (day.Equals(1)) { numberOfDays = 1; }else if (day.Equals(2)) { numberOfDays = 2; }else if (day.Equals(3)) { numberOfDays = 3; }
                     var workooutexercises = new WorkOutExercises

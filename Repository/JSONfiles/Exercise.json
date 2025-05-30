@@ -1,5 +1,41 @@
 [
   {
+    "Name": "Pushup",
+    "Description": "PushUp si so important.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Bodyweight",
+    "TargetMuscle": "Chest",
+    "TargetInjury": [ "None" ],
+    "YouTubeLink": "https://youtu.be/UCXxvVItLoM?si=uJzuweTY28YpmKu8 "
+  },
+  {
+    "Name": "Tricep pushdown",
+    "Description": "PushUp si so important.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "Cable",
+    "TargetMuscle": "Triceps",
+    "TargetInjury": [ "None" ],
+    "YouTubeLink": "https://youtu.be/UCXxvVItLoM?si=uJzuweTY28YpmKu8 "
+  },
+  {
+    "Name": "squat",
+    "Description": "PushUp si so important.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "BodyWeight",
+    "TargetMuscle": "Quads",
+    "TargetInjury": [ "None" ],
+    "YouTubeLink": "https://youtu.be/UCXxvVItLoM?si=uJzuweTY28YpmKu8 "
+  },
+  {
+    "Name": "bicep curl",
+    "Description": "PushUp si so important.",
+    "Difficulty": "Beginner",
+    "TypeOfMachine": "BodyWeight",
+    "TargetMuscle": "Biceps",
+    "TargetInjury": [ "None" ],
+    "YouTubeLink": "https://youtu.be/UCXxvVItLoM?si=uJzuweTY28YpmKu8 "
+  },
+  {
     "Name": "Seated Cable Row",
     "Description": "A machine-based exercise targeting the back muscles.",
     "Difficulty": "Beginner",
